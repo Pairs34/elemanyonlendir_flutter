@@ -17,10 +17,14 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 class Browser extends StatelessWidget {
+  final String uri;
+
+  Browser({this.uri});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BrowserPage(),
+      home: BrowserPage(url: uri,),
     );
   }
 }

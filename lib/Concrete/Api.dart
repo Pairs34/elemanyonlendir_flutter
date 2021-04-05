@@ -9,6 +9,7 @@ class ElemanyonlendirApi {
   String base_uri = "https://elemanyonlendirapp.top";
 
   Future<String> verify_token() async {
+    print("Verify Token = ${Globals.token}");
     var response = await http.post(Uri.parse(base_uri + "/verifytoken"),
         body: jsonEncode({
           "token": Globals.token
@@ -30,7 +31,7 @@ class ElemanyonlendirApi {
         body: jsonEncode({
           "username": loginRequest.username,
           "password": loginRequest.password,
-          "token": loginRequest.token
+          "push_token": loginRequest.push_token
         }),
         headers: {
           "Content-Type": "application/json",

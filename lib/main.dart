@@ -1,11 +1,15 @@
+import 'package:elemanyonlendir/Helpers/Globals.dart';
 import 'package:elemanyonlendir/UI/frmBrowser.dart';
 import 'package:elemanyonlendir/UI/frmLogin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'Concrete/Api.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -26,8 +30,20 @@ void main() async {
     badge: true,
     sound: true,
   );
-
-  runApp(Login());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  Globals.token = prefs.getString("verify_token");
+  if (Globals.token != null) {
+    ElemanyonlendirApi().verify_token().then((value) => {
+          if (!value.contains("success"))
+            {
+              runApp(Login()),
+            }
+          else
+            {
+              runApp(Browser(uri: "https://elemanyonlendirapp.top/app/token/${Globals.token}",)),
+            }
+        });
+  } else {
+    runApp(Login());
+  }
 }
-
-
