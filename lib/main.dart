@@ -14,13 +14,23 @@ import 'Concrete/Api.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: const FirebaseOptions(
+    apiKey: 'AIzaSyBb4oB4rWP6vqqYv_Ims8c0vLbePDWe--4',
+    appId: '1:542509130475:ios:2e36e31a49b0e4bd5914ae',
+    messagingSenderId: '542509130475',
+    projectId: 'elemanyonlendir-6c6b7',
+  ));
   print('Handling a background message ${message.messageId}');
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: const FirebaseOptions(
+    apiKey: 'AIzaSyBb4oB4rWP6vqqYv_Ims8c0vLbePDWe--4',
+    appId: '1:542509130475:ios:2e36e31a49b0e4bd5914ae',
+    messagingSenderId: '542509130475',
+    projectId: 'elemanyonlendir-6c6b7',
+  ));
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   /// Update the iOS foreground notification presentation options to allow

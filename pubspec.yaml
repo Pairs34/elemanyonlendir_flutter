@@ -23,11 +23,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  webview_flutter: ^2.0.2
+  webview_flutter: ^3.0.0
   firebase_core: ^1.0.2
-  firebase_messaging: ^9.1.0
-  hexcolor: ^2.0.3
-  flutter_local_notifications: ^5.0.0
+  firebase_messaging: ^11.2.5
+  hexcolor: ^2.0.6
+  flutter_local_notifications: ^9.2.0
   http: ^0.13.1
   flutter_masked_text2: ^0.9.1
   shared_preferences: ^2.0.5

@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:elemanyonlendir/Concrete/Api.dart';
 import 'package:elemanyonlendir/UI/frmLogin.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -11,8 +12,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', // id
-  'High Importance Notifications', // title
-  'This channel is used for important notifications.', // description
+  'High Importance Notifications', // title description
   importance: Importance.high,
 );
 
@@ -24,7 +24,9 @@ class Browser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BrowserPage(url: uri,),
+      home: BrowserPage(
+        url: uri,
+      ),
     );
   }
 }
@@ -45,18 +47,20 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
-        .requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
+    if (Platform.isIOS) {
+      flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          .requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+    }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification;
-      var androidInit = AndroidInitializationSettings('app_icon');
+      var androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
       var iOSInit = IOSInitializationSettings();
       var init = InitializationSettings(android: androidInit, iOS: iOSInit);
       flutterLocalNotificationsPlugin.initialize(init).then((done) => {
@@ -68,7 +72,6 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
                 android: AndroidNotificationDetails(
                   channel.id,
                   channel.name,
-                  channel.description,
                   icon: 'launch_background',
                 ),
                 iOS: IOSNotificationDetails(),
@@ -82,15 +85,16 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       ElemanyonlendirApi().verify_token().then((value) => {
-          if(!value.contains("success"))
-          {
-            Navigator.pushReplacement(context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => new Login(),
-              ),
-            )
-          }
-      });
+            if (!value.contains("success"))
+              {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => new Login(),
+                  ),
+                )
+              }
+          });
     }
   }
 
