@@ -14,7 +14,8 @@ import 'Concrete/Api.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp(options: const FirebaseOptions(
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
     apiKey: 'AIzaSyBb4oB4rWP6vqqYv_Ims8c0vLbePDWe--4',
     appId: '1:542509130475:ios:2e36e31a49b0e4bd5914ae',
     messagingSenderId: '542509130475',
@@ -25,7 +26,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: const FirebaseOptions(
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
     apiKey: 'AIzaSyBb4oB4rWP6vqqYv_Ims8c0vLbePDWe--4',
     appId: '1:542509130475:ios:2e36e31a49b0e4bd5914ae',
     messagingSenderId: '542509130475',
@@ -50,7 +52,10 @@ void main() async {
             }
           else
             {
-              runApp(Browser(uri: "https://elemanyonlendirapp.top/app/token/${Globals.token}",)),
+              runApp(Browser(
+                uri:
+                    "https://elemanyonlendirapp.top/app/token/${Globals.token}",
+              )),
             }
         });
   } else {
