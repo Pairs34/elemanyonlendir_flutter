@@ -16,10 +16,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-    apiKey: 'AIzaSyBb4oB4rWP6vqqYv_Ims8c0vLbePDWe--4',
-    appId: '1:542509130475:ios:2e36e31a49b0e4bd5914ae',
-    messagingSenderId: '542509130475',
-    projectId: 'elemanyonlendir-6c6b7',
+    apiKey: 'AIzaSyCLL-ZWZ4maiDatWst7msWR4yxujfqqdhs',
+    appId: '1:366720337902:android:461d20e63818b1507330ff',
+    messagingSenderId: '366720337902',
+    projectId: 'cilingirbul-99c89',
   ));
   print('Handling a background message ${message.messageId}');
 }
