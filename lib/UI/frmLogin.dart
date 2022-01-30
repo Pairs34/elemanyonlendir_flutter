@@ -1,12 +1,8 @@
-import 'dart:ui';
-
 import 'package:elemanyonlendir/Concrete/Api.dart';
 import 'package:elemanyonlendir/Helpers/Globals.dart';
-import 'package:elemanyonlendir/Models/LoginResponseModel.dart';
 import 'package:elemanyonlendir/Models/TokenVerify.dart';
 import 'package:elemanyonlendir/UI/frmBrowser.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:hexcolor/hexcolor.dart';
