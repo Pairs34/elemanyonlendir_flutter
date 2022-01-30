@@ -19,6 +19,7 @@ class ElemanyonlendirApi {
         });
 
     if (response.statusCode == 200) {
+      print("Verify Token Result = " + response.body);
       return response.body;
     }
   }
@@ -37,6 +38,7 @@ class ElemanyonlendirApi {
         });
 
     if (response.statusCode == 200) {
+      print("Login Result = " + response.body);
       Map response_decoded = jsonDecode(response.body);
       return LoginResponseModel(
           token: response_decoded["token"], url: response_decoded["url"]);

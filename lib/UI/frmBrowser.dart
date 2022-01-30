@@ -46,6 +46,9 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    if (Platform.isAndroid) {
+      WebView.platform = AndroidWebView();
+    }
 
     if (Platform.isIOS) {
       flutterLocalNotificationsPlugin
@@ -63,6 +66,7 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
       var androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
       var iOSInit = IOSInitializationSettings();
       var init = InitializationSettings(android: androidInit, iOS: iOSInit);
+      print("Bildiri badisi = " + notification.body);
       flutterLocalNotificationsPlugin.initialize(init).then((done) => {
             flutterLocalNotificationsPlugin.show(
               0,

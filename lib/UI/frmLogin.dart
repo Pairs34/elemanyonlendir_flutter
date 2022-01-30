@@ -29,7 +29,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
-  var usernameController = MaskedTextController(mask: "00000000000",text: "05xxxxxxxxx");
+  var usernameController =
+      MaskedTextController(mask: "00000000000", text: "05xxxxxxxxx");
   var passController = TextEditingController();
 
   @override
@@ -84,7 +85,7 @@ class _LoginState extends State<LoginPage> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () => {
                         if (usernameController.text.isNotEmpty &
                             passController.text.isNotEmpty)
@@ -104,7 +105,7 @@ class _LoginState extends State<LoginPage> {
 
   Future<Map<dynamic, dynamic>> login2web() async {
     String token = await FirebaseMessaging.instance.getToken();
-    print("Token = $token");
+    print("Token from firebase = $token");
     ElemanyonlendirApi()
         .do_login(
           loginRequest: LoginRequest(
@@ -131,15 +132,14 @@ class _LoginState extends State<LoginPage> {
             });
   }
 
-  saveTokenToSharedPreference(String token) async
-  {
+  saveTokenToSharedPreference(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("verify_token", token);
   }
 
   showAlertDialog(BuildContext context) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("Tamam"),
       onPressed: () {
         Navigator.of(context).pop();
