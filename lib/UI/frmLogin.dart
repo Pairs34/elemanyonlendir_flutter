@@ -39,7 +39,11 @@ class _LoginState extends State<LoginPage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(15),
-              child: Image.asset("assets/images/login_logo.png"),
+              child: Image.asset(
+                "assets/images/login_logo.png",
+                width: 140,
+                height: 150,
+              ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -99,7 +103,7 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  Future<Map<dynamic, dynamic>> login2web() async {
+  Future<void> login2web() async {
     String token = await FirebaseMessaging.instance.getToken();
     print("Token from firebase = $token");
     ElemanyonlendirApi()

@@ -25,6 +25,7 @@ void main() async {
     badge: true,
     sound: true,
   );
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Globals.token = prefs.getString("verify_token");
   if (Globals.token != null) {
