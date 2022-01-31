@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names, missing_return, unused_local_variable
 
 import 'dart:io' show Platform;
-import 'package:elemanyonlendir/Concrete/Api.dart';
-import 'package:elemanyonlendir/UI/frmLogin.dart';
+import 'package:cilingirbul/Concrete/Api.dart';
+import 'package:cilingirbul/UI/frmLogin.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -90,7 +90,7 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      ElemanyonlendirApi().verify_token().then((value) => {
+      cilingirbulApi().verify_token().then((value) => {
             if (!value.contains("success")) {GotoLogin()}
           });
     }

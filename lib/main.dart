@@ -1,6 +1,6 @@
-import 'package:elemanyonlendir/Helpers/Globals.dart';
-import 'package:elemanyonlendir/UI/frmBrowser.dart';
-import 'package:elemanyonlendir/UI/frmLogin.dart';
+import 'package:cilingirbul/Helpers/Globals.dart';
+import 'package:cilingirbul/UI/frmBrowser.dart';
+import 'package:cilingirbul/UI/frmLogin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Globals.token = prefs.getString("verify_token");
   if (Globals.token != null) {
-    ElemanyonlendirApi().verify_token().then((value) => {
+    cilingirbulApi().verify_token().then((value) => {
           if (!value.contains("success"))
             {
               runApp(Login()),

@@ -2,12 +2,12 @@
 
 import 'dart:convert';
 
-import 'package:elemanyonlendir/Helpers/Globals.dart';
-import 'package:elemanyonlendir/Models/LoginResponseModel.dart';
-import 'package:elemanyonlendir/Models/TokenVerify.dart';
+import 'package:cilingirbul/Helpers/Globals.dart';
+import 'package:cilingirbul/Models/LoginResponseModel.dart';
+import 'package:cilingirbul/Models/TokenVerify.dart';
 import 'package:http/http.dart' as http;
 
-class ElemanyonlendirApi {
+class cilingirbulApi {
   String baseUri = "http://uygulama.xn--ilingirbul-n6a.com";
 
   Future<String> verify_token() async {
