@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, camel_case_types
 
 import 'dart:convert';
 
@@ -45,7 +45,8 @@ class cilingirbulApi {
       print("Login Result = " + response.body);
       Map responseDecoded = jsonDecode(response.body);
       return LoginResponseModel(
-          token: responseDecoded["token"], url: responseDecoded["url"]);
+          token: responseDecoded["token"],
+          url: responseDecoded["url"]);
     } else {
       return null;
     }

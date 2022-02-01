@@ -1,22 +1,23 @@
-import 'package:cilingirbul/Helpers/Globals.dart';
-import 'package:cilingirbul/UI/frmBrowser.dart';
-import 'package:cilingirbul/UI/frmLogin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Concrete/Api.dart';
+import 'Helpers/Globals.dart';
+import 'UI/frmBrowser.dart';
+import 'UI/frmLogin.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
-    apiKey: 'AIzaSyCLL-ZWZ4maiDatWst7msWR4yxujfqqdhs',
-    appId: '1:366720337902:android:461d20e63818b1507330ff',
-    messagingSenderId: '366720337902',
-    projectId: 'cilingirbul-99c89',
-  ));
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyCLL-ZWZ4maiDatWst7msWR4yxujfqqdhs',
+      appId: '1:366720337902:android:461d20e63818b1507330ff',
+      messagingSenderId: '366720337902',
+      projectId: 'cilingirbul-99c89',
+    ),
+  );
 
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.
@@ -32,17 +33,23 @@ void main() async {
     cilingirbulApi().verify_token().then((value) => {
           if (!value.contains("success"))
             {
-              runApp(Login()),
+              runApp(
+                Login(),
+              ),
             }
           else
             {
-              runApp(Browser(
-                uri:
-                    "https://uygulama.çilingirbul.com/app/token/${Globals.token}",
-              )),
+              runApp(
+                Browser(
+                  uri:
+                      "https://uygulama.çilingirbul.com/app/token/${Globals.token}",
+                ),
+              ),
             }
         });
   } else {
-    runApp(Login());
+    runApp(
+      Login(),
+    );
   }
 }

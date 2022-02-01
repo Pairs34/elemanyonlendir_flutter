@@ -1,12 +1,13 @@
 import 'package:cilingirbul/Concrete/Api.dart';
 import 'package:cilingirbul/Helpers/Globals.dart';
 import 'package:cilingirbul/Models/TokenVerify.dart';
-import 'package:cilingirbul/UI/frmBrowser.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'frmBrowser.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -89,6 +90,10 @@ class _LoginState extends State<LoginPage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              HexColor("#9300cc")),
+                        ),
                         onPressed: () => {
                           if (usernameController.text.isNotEmpty &
                               passController.text.isNotEmpty)
