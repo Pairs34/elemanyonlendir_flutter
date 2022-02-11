@@ -43,10 +43,12 @@ class _LoginState extends State<LoginPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(15),
-                child: Image.asset(
-                  "assets/images/login_logo.png",
-                  width: 140,
-                  height: 150,
+                child: Container(
+                  height: 200,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  margin: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.09),
+                  child: Image.asset("assets/images/login.png"),
                 ),
               ),
               Padding(
