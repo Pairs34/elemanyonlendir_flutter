@@ -39,7 +39,11 @@ class _LoginState extends State<LoginPage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(15),
-              child: Image.asset("assets/images/login_logo.png"),
+              child: Image.asset(
+                "assets/images/login_logo.png",
+                width: 200,
+                height: 200,
+              ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -82,6 +86,9 @@ class _LoginState extends State<LoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromRGBO(135, 25, 197, 1))),
                       onPressed: () => {
                         if (usernameController.text.isNotEmpty &
                             passController.text.isNotEmpty)
