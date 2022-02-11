@@ -1,11 +1,15 @@
+// ignore_for_file: must_be_immutable, non_constant_identifier_names, missing_return, unused_local_variable
+
 import 'dart:io' show Platform;
-import 'package:elemanyonlendir/Concrete/Api.dart';
-import 'package:elemanyonlendir/UI/frmLogin.dart';
+import 'package:cilingirbul/Concrete/Api.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import 'frmLogin.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -43,7 +47,6 @@ class BrowserPage extends StatefulWidget {
 class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     if (Platform.isAndroid) {
@@ -88,18 +91,20 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      ElemanyonlendirApi().verify_token().then((value) => {
-            if (!value.contains("success"))
-              {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => new Login(),
-                  ),
-                )
-              }
+      cilingirbulApi().verify_token().then((value) => {
+            if (!value.contains("success")) {GotoLogin()}
           });
     }
+  }
+
+  Future<dynamic> GotoLogin() {
+    ClearSavedToken();
+    return Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => new Login(),
+      ),
+    );
   }
 
   @override
@@ -117,8 +122,23 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
           initialUrl: widget.url,
           javascriptMode: JavascriptMode.unrestricted,
           gestureNavigationEnabled: true,
+          navigationDelegate: NavigatingDetect,
         ),
       ),
     );
+  }
+
+  NavigationDecision NavigatingDetect(NavigationRequest request) {
+    print(request.url);
+    if (request.url.contains("logout")) {
+      GotoLogin();
+    }
+
+    return NavigationDecision.navigate;
+  }
+
+  void ClearSavedToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }

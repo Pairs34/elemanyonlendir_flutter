@@ -1,12 +1,13 @@
-import 'package:elemanyonlendir/Concrete/Api.dart';
-import 'package:elemanyonlendir/Helpers/Globals.dart';
-import 'package:elemanyonlendir/Models/TokenVerify.dart';
-import 'package:elemanyonlendir/UI/frmBrowser.dart';
+import 'package:cilingirbul/Concrete/Api.dart';
+import 'package:cilingirbul/Helpers/Globals.dart';
+import 'package:cilingirbul/Models/TokenVerify.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'frmBrowser.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -34,82 +35,87 @@ class _LoginState extends State<LoginPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: HexColor("#F75621"),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Image.asset(
-                "assets/images/login_logo.png",
-                width: 200,
-                height: 200,
+        resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Image.asset(
+                  "assets/images/login_logo.png",
+                  width: 140,
+                  height: 150,
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: TextField(
-                controller: usernameController,
-                decoration: InputDecoration(
-                    labelText: "Telefon Numaranız",
-                    hintStyle: TextStyle(color: Colors.white),
-                    labelStyle: TextStyle(
-                        color: Colors.black,
-                        decorationStyle: TextDecorationStyle.wavy),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                      labelText: "Telefon Numaranız",
+                      hintStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(
+                          color: Colors.black,
+                          decorationStyle: TextDecorationStyle.wavy),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      hintText: '05xxxxxxxxx'),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: TextField(
+                  obscureText: true,
+                  obscuringCharacter: "*",
+                  controller: passController,
+                  decoration: InputDecoration(
+                      labelText: "Parola",
+                      hintStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(
+                          color: Colors.black,
+                          decorationStyle: TextDecorationStyle.wavy),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      hintText: 'Parola giriniz'),
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              HexColor("#9300cc")),
+                        ),
+                        onPressed: () => {
+                          if (usernameController.text.isNotEmpty &
+                              passController.text.isNotEmpty)
+                            {login2web()}
+                        },
+                        child: Text("GİRİŞ"),
                       ),
                     ),
-                    hintText: '05xxxxxxxxx'),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: TextField(
-                obscureText: true,
-                obscuringCharacter: "*",
-                controller: passController,
-                decoration: InputDecoration(
-                    labelText: "Parola",
-                    hintStyle: TextStyle(color: Colors.white),
-                    labelStyle: TextStyle(
-                        color: Colors.black,
-                        decorationStyle: TextDecorationStyle.wavy),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    hintText: 'Parola giriniz'),
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Color.fromRGBO(135, 25, 197, 1))),
-                      onPressed: () => {
-                        if (usernameController.text.isNotEmpty &
-                            passController.text.isNotEmpty)
-                          {login2web()}
-                      },
-                      child: Text("GİRİŞ"),
-                    ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Future<Map<dynamic, dynamic>> login2web() async {
+  Future<void> login2web() async {
     String token = await FirebaseMessaging.instance.getToken();
     print("Token from firebase = $token");
-    ElemanyonlendirApi()
+    cilingirbulApi()
         .do_login(
           loginRequest: LoginRequest(
               username: usernameController.text,
