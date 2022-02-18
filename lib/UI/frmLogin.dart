@@ -1,6 +1,7 @@
 import 'package:cilingirbul/Concrete/Api.dart';
 import 'package:cilingirbul/Helpers/Globals.dart';
 import 'package:cilingirbul/Models/TokenVerify.dart';
+import 'package:cilingirbul/UI/frmRegister.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
@@ -12,9 +13,7 @@ import 'frmBrowser.dart';
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginPage(),
-    );
+    return MaterialApp(home: LoginPage());
   }
 }
 
@@ -101,7 +100,31 @@ class _LoginState extends State<LoginPage> {
                               passController.text.isNotEmpty)
                             {login2web()}
                         },
-                        child: Text("GİRİŞ"),
+                        child: Text("GİRİŞ YAP"),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              HexColor("#9300cc")),
+                        ),
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  new RegisterPage(
+                                url:
+                                    "https://uygulama.xn--ilingirbul-n6a.com/app/register",
+                              ),
+                            ),
+                          ),
+                        },
+                        child: Text("KAYIT OL"),
                       ),
                     ),
                   ),
