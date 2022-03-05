@@ -42,7 +42,7 @@ void main() async {
               runApp(
                 Browser(
                   uri:
-                      "https://uygulama.çilingirbul.com/app/token/${Globals.token}",
+                      "https://uygulama.xn--ilingirbul-n6a.com/app/token/${Globals.token}",
                 ),
               ),
             }

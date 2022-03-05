@@ -50,6 +50,7 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
     if (Platform.isAndroid) {
       WebView.platform = AndroidWebView();
     }
@@ -99,7 +100,6 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
   }
 
   Future<dynamic> GotoLogin() {
-    ClearSavedToken();
     return Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -123,7 +123,7 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
           initialUrl: widget.url,
           javascriptMode: JavascriptMode.unrestricted,
           gestureNavigationEnabled: true,
-          navigationDelegate: NavigatingDetect,
+          //navigationDelegate: NavigatingDetect,
         ),
       ),
     );
@@ -132,6 +132,7 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
   NavigationDecision NavigatingDetect(NavigationRequest request) {
     print(request.url);
     if (request.url.contains("logout")) {
+      ClearSavedToken();
       GotoLogin();
     }
 
