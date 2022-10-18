@@ -23,8 +23,11 @@ class Browser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BrowserPage(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Kayıt Ol"),
+      ),
+      body: BrowserPage(
         url: uri,
       ),
     );

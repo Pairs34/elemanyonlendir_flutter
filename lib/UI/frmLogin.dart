@@ -93,6 +93,24 @@ class _LoginState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: ElevatedButton(
+                      onPressed: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => new BrowserPage(
+                              url: "https://elemanyonlendir.com/basvuru",
+                            ),
+                          ),
+                        )
+                      },
+                      child: Text("Kayıt Ol"),
+                    ),
+                  ),
+                ),
               ],
             )
           ],
