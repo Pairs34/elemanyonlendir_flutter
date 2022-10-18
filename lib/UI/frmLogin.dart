@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:elemanyonlendir/Concrete/Api.dart';
 import 'package:elemanyonlendir/Helpers/Globals.dart';
-import 'package:elemanyonlendir/Models/LoginResponseModel.dart';
 import 'package:elemanyonlendir/Models/TokenVerify.dart';
 import 'package:elemanyonlendir/UI/frmBrowser.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -84,7 +83,7 @@ class _LoginState extends State<LoginPage> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () => {
                         if (usernameController.text.isNotEmpty &
                             passController.text.isNotEmpty)
@@ -139,7 +138,7 @@ class _LoginState extends State<LoginPage> {
 
   showAlertDialog(BuildContext context) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = ElevatedButton(
       child: Text("Tamam"),
       onPressed: () {
         Navigator.of(context).pop();
