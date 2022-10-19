@@ -3,34 +3,63 @@ import 'package:elemanyonlendir/UI/frmBrowser.dart';
 import 'package:elemanyonlendir/UI/frmLogin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:elemanyonlendir/Helpers/firebase_options.dart';
 import 'Concrete/Api.dart';
 
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp(
-      options: const FirebaseOptions(
-    apiKey: 'AIzaSyCLL-ZWZ4maiDatWst7msWR4yxujfqqdhs',
-    appId: '1:366720337902:android:461d20e63818b1507330ff',
-    messagingSenderId: '366720337902',
-    projectId: 'cilingirbul-99c89',
-  ));
   print('Handling a background message ${message.messageId}');
 }
 
+AndroidNotificationChannel channel;
+bool isFlutterLocalNotificationsInitialized = false;
+Future<void> setupFlutterNotifications() async {
+  if (isFlutterLocalNotificationsInitialized) {
+    return;
+  }
+  channel = const AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    description:
+        'This channel is used for important notifications.', // description
+    importance: Importance.high,
+  );
+
+  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  /// Create an Android Notification Channel.
+  ///
+  /// We use this channel in the `AndroidManifest.xml` file to override the
+  /// default FCM channel to enable heads up notifications.
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  /// Update the iOS foreground notification presentation options to allow
+  /// heads up notifications.
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+  isFlutterLocalNotificationsInitialized = true;
+}
+
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: const FirebaseOptions(
-    apiKey: 'AIzaSyBb4oB4rWP6vqqYv_Ims8c0vLbePDWe--4',
-    appId: '1:542509130475:ios:2e36e31a49b0e4bd5914ae',
-    messagingSenderId: '542509130475',
-    projectId: 'elemanyonlendir-6c6b7',
-  ));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  if (!kIsWeb) {
+    await setupFlutterNotifications();
+  }
 
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.

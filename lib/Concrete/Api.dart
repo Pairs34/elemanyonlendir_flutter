@@ -6,7 +6,7 @@ import 'package:elemanyonlendir/Models/TokenVerify.dart';
 import 'package:http/http.dart' as http;
 
 class ElemanyonlendirApi {
-  String base_uri = "http://uygulama.xn--ilingirbul-n6a.com";
+  String base_uri = "http://uygulama.elemanyonlendir.com";
 
   Future<String> verify_token() async {
     print("Verify Token = ${Globals.token}");
@@ -37,9 +37,9 @@ class ElemanyonlendirApi {
         });
 
     if (response.statusCode == 200) {
-      Map response_decoded = jsonDecode(response.body);
+      Map responseDecoded = jsonDecode(response.body);
       return LoginResponseModel(
-          token: response_decoded["token"], url: response_decoded["url"]);
+          token: responseDecoded["token"], url: responseDecoded["url"]);
     }
   }
 }

@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:elemanyonlendir/Concrete/Api.dart';
 import 'package:elemanyonlendir/Helpers/Globals.dart';
 import 'package:elemanyonlendir/Models/TokenVerify.dart';
 import 'package:elemanyonlendir/UI/frmBrowser.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -28,7 +25,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
-  var usernameController = MaskedTextController(mask: "00000000000",text: "05xxxxxxxxx");
+  var usernameController =
+      MaskedTextController(mask: "00000000000", text: "05xxxxxxxxx");
   var passController = TextEditingController();
 
   @override
@@ -148,8 +146,7 @@ class _LoginState extends State<LoginPage> {
             });
   }
 
-  saveTokenToSharedPreference(String token) async
-  {
+  saveTokenToSharedPreference(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("verify_token", token);
   }
