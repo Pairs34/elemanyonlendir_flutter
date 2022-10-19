@@ -1,4 +1,4 @@
-package com.example.elemanyonlendir
+package com.reswia.elemanyonlendir
 
 import io.flutter.embedding.android.FlutterActivity
 

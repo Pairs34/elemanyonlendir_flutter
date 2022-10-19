@@ -12,11 +12,17 @@ import 'Concrete/Api.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await setupFlutterNotifications();
+  showFlutterNotification(message);
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
   print('Handling a background message ${message.messageId}');
 }
 
 AndroidNotificationChannel channel;
 bool isFlutterLocalNotificationsInitialized = false;
+
 Future<void> setupFlutterNotifications() async {
   if (isFlutterLocalNotificationsInitialized) {
     return;
@@ -50,6 +56,27 @@ Future<void> setupFlutterNotifications() async {
   isFlutterLocalNotificationsInitialized = true;
 }
 
+void showFlutterNotification(RemoteMessage message) {
+  var notification = message.notification;
+  var android = message.notification?.android;
+  if (notification != null && android != null && !kIsWeb) {
+    flutterLocalNotificationsPlugin.show(
+      notification.hashCode,
+      notification.title,
+      notification.body,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          channelDescription: channel.description,
+          //      one that already exists in example app.
+          icon: 'launch_background',
+        ),
+      ),
+    );
+  }
+}
+
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
@@ -60,6 +87,11 @@ void main() async {
   if (!kIsWeb) {
     await setupFlutterNotifications();
   }
+
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+
+  print("FCM Token");
+  print(fcmToken);
 
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.
