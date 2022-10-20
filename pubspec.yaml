@@ -26,15 +26,35 @@ dependencies:
   webview_flutter: ^3.0.0
   firebase_core: ^1.0.2
   firebase_messaging: ^11.2.5
-  hexcolor: ^2.0.6
+  hexcolor: ^3.0.1
   flutter_local_notifications: ^9.2.0
   http: ^0.13.1
   flutter_masked_text2: ^0.9.1
   shared_preferences: ^2.0.5
+  flutter_launcher_icons: ^0.10.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/icon/launcher.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/icon/launcher.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/icon/launcher.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/icon/launcher.png"
 
 dev_dependencies:
   flutter_test:
