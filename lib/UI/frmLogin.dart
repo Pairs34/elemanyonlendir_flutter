@@ -120,30 +120,29 @@ class _LoginState extends State<LoginPage> {
   Future<Map<dynamic, dynamic>> login2web() async {
     String token = await FirebaseMessaging.instance.getToken();
     print("Token = $token");
-    ElemanyonlendirApi()
-        .do_login(
-          loginRequest: LoginRequest(
-              username: usernameController.text,
-              password: passController.text,
-              push_token: token),
-        )
-        .then((value) => {
-              if (value != null)
-                {
-                  Globals.token = value.token,
-                  saveTokenToSharedPreference(value.token),
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => new BrowserPage(
-                        url: value.url,
-                      ),
-                    ),
-                  )
-                }
-              else
-                {showAlertDialog(context)}
-            });
+    var login_result = await ElemanyonlendirApi().do_login(
+      loginRequest: LoginRequest(
+          username: usernameController.text,
+          password: passController.text,
+          push_token: token),
+    );
+
+    if (login_result != null) {
+      Globals.token = login_result.token;
+      saveTokenToSharedPreference(login_result.token);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => new BrowserPage(
+            url: login_result.url,
+          ),
+        ),
+      );
+    } else {
+      showAlertDialog(context);
+    }
+
+    return null;
   }
 
   saveTokenToSharedPreference(String token) async {

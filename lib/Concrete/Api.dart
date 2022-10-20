@@ -20,6 +20,8 @@ class ElemanyonlendirApi {
 
     if (response.statusCode == 200) {
       return response.body;
+    } else {
+      return "";
     }
   }
 
@@ -40,6 +42,8 @@ class ElemanyonlendirApi {
       Map responseDecoded = jsonDecode(response.body);
       return LoginResponseModel(
           token: responseDecoded["token"], url: responseDecoded["url"]);
+    } else {
+      return null;
     }
   }
 }

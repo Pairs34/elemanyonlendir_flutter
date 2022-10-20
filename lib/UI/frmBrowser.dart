@@ -23,11 +23,8 @@ class Browser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Kayıt Ol"),
-      ),
-      body: BrowserPage(
+    return MaterialApp(
+      home: BrowserPage(
         url: uri,
       ),
     );
@@ -46,7 +43,6 @@ class BrowserPage extends StatefulWidget {
 class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
