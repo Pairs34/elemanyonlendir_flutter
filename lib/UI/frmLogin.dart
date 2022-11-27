@@ -33,13 +33,17 @@ class _LoginState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor("#F75621"),
+        backgroundColor: HexColor("#fb2252"),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.all(15),
-              child: Image.asset("assets/images/login_logo.png"),
+              child: Image.asset(
+                "assets/images/logo_white.png",
+                width: MediaQuery.of(context).size.width - 40,
+                height: 100,
+              ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -82,12 +86,17 @@ class _LoginState extends State<LoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(
+                          HexColor("#8B0000"),
+                        ),
+                      ),
                       onPressed: () => {
                         if (usernameController.text.isNotEmpty &
                             passController.text.isNotEmpty)
                           {login2web()}
                       },
-                      child: Text("GİRİŞ"),
+                      child: Text("Giriş Yap"),
                     ),
                   ),
                 ),
@@ -95,12 +104,18 @@ class _LoginState extends State<LoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(
+                          HexColor("#8B0000"),
+                        ),
+                      ),
                       onPressed: () => {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) => new BrowserPage(
-                              url: "https://elemanyonlendir.com/basvuru",
+                              url:
+                                  "https://benimtemizlikcim.com/temizlikci-kayit",
                             ),
                           ),
                         )

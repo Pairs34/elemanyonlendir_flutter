@@ -1,6 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.mysgrup.temizlikhizmet">
    <application
-        android:label="Eleman Yönlendir"
+        android:label="Benim Temizlikcim Hizmet Veren"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

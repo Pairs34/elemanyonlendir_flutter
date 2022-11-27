@@ -106,7 +106,7 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: HexColor("#F75621"),
+      color: HexColor("#fb2252"),
       child: SafeArea(
         child: WebView(
           initialUrl: widget.url,
