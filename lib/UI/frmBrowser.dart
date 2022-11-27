@@ -113,7 +113,16 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
           javascriptMode: JavascriptMode.unrestricted,
           gestureNavigationEnabled: true,
           onPageStarted: (url) {
-            // bla bla bla
+            print(url);
+
+            if (url.contains("logout")) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => new Login(),
+                ),
+              );
+            }
           },
         ),
       ),
