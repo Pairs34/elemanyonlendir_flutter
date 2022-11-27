@@ -112,6 +112,9 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
           initialUrl: widget.url,
           javascriptMode: JavascriptMode.unrestricted,
           gestureNavigationEnabled: true,
+          onPageStarted: (url) {
+            // bla bla bla
+          },
         ),
       ),
     );

@@ -114,7 +114,7 @@ void main() async {
             {
               runApp(Browser(
                 uri:
-                    "https://elemanyonlendirapp.top/app/token/${Globals.token}",
+                    "https://uygulama.benimtemizlikcim.com/app/token/${Globals.token}",
               )),
             }
         });
