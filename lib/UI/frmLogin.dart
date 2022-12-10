@@ -1,9 +1,12 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:elemanyonlendir/Concrete/Api.dart';
 import 'package:elemanyonlendir/Helpers/Globals.dart';
 import 'package:elemanyonlendir/Models/TokenVerify.dart';
 import 'package:elemanyonlendir/UI/frmBrowser.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +14,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarBrightness: Brightness.dark,
+    ));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
@@ -34,6 +41,7 @@ class _LoginState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        extendBodyBehindAppBar: true,
         backgroundColor: HexColor("#fb2252"),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
