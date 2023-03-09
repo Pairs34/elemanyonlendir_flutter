@@ -1,4 +1,4 @@
-package com.mysgrup.temizlikhizmet
+package com.mysgrup.cleanermy
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -114,7 +114,7 @@ void main() async {
             {
               runApp(Browser(
                 uri:
-                    "https://uygulama.benimtemizlikcim.com/app/token/${Globals.token}",
+                    "https://app.cleanermy.com/app/token/${Globals.token}",
               )),
             }
         });

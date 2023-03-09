@@ -6,7 +6,7 @@ import 'package:elemanyonlendir/Models/TokenVerify.dart';
 import 'package:http/http.dart' as http;
 
 class ElemanyonlendirApi {
-  String base_uri = "https://uygulama.benimtemizlikcim.com";
+  String base_uri = "https://app.cleanermy.com";
 
   Future<String> verify_token() async {
     print("Verify Token = ${Globals.token}");

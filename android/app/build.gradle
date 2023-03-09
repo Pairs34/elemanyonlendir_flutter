@@ -34,7 +34,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.mysgrup.temizlikhizmet"
+        applicationId "com.mysgrup.cleanermy"
         minSdkVersion 26
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
@@ -48,7 +48,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-    namespace 'com.mysgrup.temizlikhizmet'
+    namespace 'com.mysgrup.cleanermy'
 }
 
 flutter {
