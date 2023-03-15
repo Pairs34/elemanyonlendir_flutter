@@ -82,7 +82,8 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform, name: "CleanerMy");
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
@@ -113,8 +114,7 @@ void main() async {
           else
             {
               runApp(Browser(
-                uri:
-                    "https://app.cleanermy.com/app/token/${Globals.token}",
+                uri: "https://app.cleanermy.com/app/token/${Globals.token}",
               )),
             }
         });

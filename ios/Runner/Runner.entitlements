@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.mysgrup.benimtemizlikcim</string>
+		<string>$(AppIdentifierPrefix)com.mysgrup.cleanermy</string>
 	</array>
 </dict>
 </plist>
