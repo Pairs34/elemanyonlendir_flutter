@@ -26,8 +26,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
-  var usernameController =
-      MaskedTextController(mask: "00000000000", text: "05xxxxxxxxx");
+  var usernameController = TextEditingController();
+  // MaskedTextController(mask: "00000000000", text: "05xxxxxxxxx");
   var passController = TextEditingController();
 
   @override
@@ -51,7 +51,7 @@ class _LoginState extends State<LoginPage> {
               child: TextField(
                 controller: usernameController,
                 decoration: InputDecoration(
-                    labelText: "Telefon Numaranız",
+                    labelText: "Phone Number",
                     hintStyle: TextStyle(color: Colors.white),
                     labelStyle: TextStyle(
                         color: Colors.black,
@@ -71,14 +71,14 @@ class _LoginState extends State<LoginPage> {
                 obscuringCharacter: "*",
                 controller: passController,
                 decoration: InputDecoration(
-                    labelText: "Parola",
+                    labelText: "Password",
                     hintStyle: TextStyle(color: Colors.white),
                     labelStyle: TextStyle(
                         color: Colors.black,
                         decorationStyle: TextDecorationStyle.wavy),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
-                    hintText: 'Parola giriniz'),
+                    hintText: 'Please type password'),
               ),
             ),
             Row(
@@ -97,7 +97,7 @@ class _LoginState extends State<LoginPage> {
                             passController.text.isNotEmpty)
                           {login2web()}
                       },
-                      child: Text("Giriş Yap"),
+                      child: Text("Login"),
                     ),
                   ),
                 ),
@@ -120,7 +120,7 @@ class _LoginState extends State<LoginPage> {
                           ),
                         )
                       },
-                      child: Text("Kayıt Ol"),
+                      child: Text("Register"),
                     ),
                   ),
                 ),
