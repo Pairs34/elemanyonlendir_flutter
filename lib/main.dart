@@ -82,8 +82,12 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform, name: "CleanerMy");
+  if (defaultTargetPlatform == TargetPlatform.android)
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform, name: "CleanerMy");
+  else
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
