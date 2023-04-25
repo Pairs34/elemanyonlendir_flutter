@@ -60,8 +60,8 @@ class _LoginState extends State<LoginPage> {
                       borderRadius: BorderRadius.all(
                         Radius.circular(10),
                       ),
-                    ),
-                    hintText: '05xxxxxxxxx'),
+                    )
+                    /*,hintText: '05xxxxxxxxx'*/),
               ),
             ),
             Padding(

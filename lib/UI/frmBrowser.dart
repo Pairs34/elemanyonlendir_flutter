@@ -42,6 +42,8 @@ class BrowserPage extends StatefulWidget {
 }
 
 class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
+  WebViewController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -61,7 +63,7 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification;
       var androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
-      var iOSInit = IOSInitializationSettings();
+      var iOSInit = DarwinInitializationSettings();
       var init = InitializationSettings(android: androidInit, iOS: iOSInit);
       flutterLocalNotificationsPlugin.initialize(init).then((done) => {
             flutterLocalNotificationsPlugin.show(
@@ -74,11 +76,30 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
                   channel.name,
                   icon: 'launch_background',
                 ),
-                iOS: IOSNotificationDetails(),
+                iOS: DarwinNotificationDetails(),
               ),
             )
           });
     });
+
+    _controller = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setNavigationDelegate(NavigationDelegate(
+      onNavigationRequest: (NavigationRequest request) {
+        if (request.url.contains('logout')) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => new Login(),
+            ),
+          );
+
+          return NavigationDecision.prevent;
+        }
+        return NavigationDecision.navigate;
+      },
+    )
+    )..loadRequest(Uri.parse(widget.url));
   }
 
   @override
@@ -109,22 +130,8 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
     return Container(
       color: HexColor("#fb2252"),
       child: SafeArea(
-        child: WebView(
-          initialUrl: widget.url,
-          javascriptMode: JavascriptMode.unrestricted,
-          gestureNavigationEnabled: true,
-          onPageStarted: (url) {
-            print(url);
-
-            if (url.contains("logout")) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => new Login(),
-                ),
-              );
-            }
-          },
+        child: WebViewWidget(
+          controller: _controller,
         ),
       ),
     );
