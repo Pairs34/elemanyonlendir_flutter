@@ -32,101 +32,107 @@ class _LoginState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: HexColor("#fb2252"),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Image.asset(
-                "assets/images/logo_white.png",
-                width: MediaQuery.of(context).size.width - 40,
-                height: 100,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: TextField(
-                controller: usernameController,
-                decoration: InputDecoration(
-                    labelText: "Phone Number",
-                    hintStyle: TextStyle(color: Colors.white),
-                    labelStyle: TextStyle(
-                        color: Colors.black,
-                        decorationStyle: TextDecorationStyle.wavy),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    )
-                    /*,hintText: '05xxxxxxxxx'*/),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: TextField(
-                obscureText: true,
-                obscuringCharacter: "*",
-                controller: passController,
-                decoration: InputDecoration(
-                    labelText: "Password",
-                    hintStyle: TextStyle(color: Colors.white),
-                    labelStyle: TextStyle(
-                        color: Colors.black,
-                        decorationStyle: TextDecorationStyle.wavy),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    hintText: 'Please type password'),
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(
-                          HexColor("#8B0000"),
-                        ),
-                      ),
-                      onPressed: () => {
-                        if (usernameController.text.isNotEmpty &
-                            passController.text.isNotEmpty)
-                          {login2web()}
-                      },
-                      child: Text("Login"),
-                    ),
+    return Scaffold(
+      backgroundColor: HexColor("#fb2252"),
+      body: Center(
+        child: SingleChildScrollView(
+          reverse: true,
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: FittedBox(
+                  child: Image.asset(
+                    "assets/images/logo_white.png",
+                    width: MediaQuery.of(context).size.width - 50,
+                    fit: BoxFit.fill,
+                    height: MediaQuery.of(context).size.width - 100,
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(
-                          HexColor("#8B0000"),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                      labelText: "Phone Number",
+                      hintStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(
+                          color: Colors.black,
+                          decorationStyle: TextDecorationStyle.wavy),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
                         ),
-                      ),
-                      onPressed: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => new BrowserPage(
-                              url: "https://cleanermy.com/temizlikci-kayit",
-                            ),
+                      )
+                      /*,hintText: '05xxxxxxxxx'*/),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: TextField(
+                  obscureText: true,
+                  obscuringCharacter: "*",
+                  controller: passController,
+                  decoration: InputDecoration(
+                      labelText: "Password",
+                      hintStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(
+                          color: Colors.black,
+                          decorationStyle: TextDecorationStyle.wavy),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      hintText: 'Please type password'),
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                            HexColor("#8B0000"),
                           ),
-                        )
-                      },
-                      child: Text("Register"),
+                        ),
+                        onPressed: () => {
+                          if (usernameController.text.isNotEmpty &
+                              passController.text.isNotEmpty)
+                            {login2web()}
+                        },
+                        child: Text("Login"),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                            HexColor("#8B0000"),
+                          ),
+                        ),
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => new BrowserPage(
+                                url: "https://cleanermy.com/cleaner-registration",
+                              ),
+                            ),
+                          )
+                        },
+                        child: Text("Register"),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
