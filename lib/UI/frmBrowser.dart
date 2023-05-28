@@ -19,7 +19,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 class Browser extends StatelessWidget {
   final String uri;
 
-  Browser({this.uri});
+  Browser({required this.uri});
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +35,14 @@ class Browser extends StatelessWidget {
 class BrowserPage extends StatefulWidget {
   String url;
 
-  BrowserPage({Key key, this.url}) : super(key: key);
+  BrowserPage({required this.url});
 
   @override
   _BrowserPageState createState() => _BrowserPageState();
 }
 
 class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
-  WebViewController _controller;
+  late WebViewController _controller;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
       flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
               IOSFlutterLocalNotificationsPlugin>()
-          .requestPermissions(
+          ?.requestPermissions(
             alert: true,
             badge: true,
             sound: true,
@@ -61,15 +61,15 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
     }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
+      RemoteNotification? notification = message.notification;
       var androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
       var iOSInit = DarwinInitializationSettings();
       var init = InitializationSettings(android: androidInit, iOS: iOSInit);
       flutterLocalNotificationsPlugin.initialize(init).then((done) => {
             flutterLocalNotificationsPlugin.show(
               0,
-              notification.title,
-              notification.body,
+              notification?.title,
+              notification?.body,
               NotificationDetails(
                 android: AndroidNotificationDetails(
                   channel.id,

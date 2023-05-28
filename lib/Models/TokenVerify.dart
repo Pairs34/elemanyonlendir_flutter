@@ -3,5 +3,5 @@ class LoginRequest {
   String password;
   String push_token;
 
-  LoginRequest({this.username,this.push_token,this.password});
+  LoginRequest({required this.username,required this.push_token,required this.password});
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>542509130475-kel54av01jqdalcoh1m2l69571c9scdl.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.542509130475-kel54av01jqdalcoh1m2l69571c9scdl</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBb4oB4rWP6vqqYv_Ims8c0vLbePDWe--4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>542509130475</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>no</string>
+	<key>PROJECT_ID</key>
+	<string>elemanyonlendir-6c6b7</string>
+	<key>STORAGE_BUCKET</key>
+	<string>elemanyonlendir-6c6b7.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:542509130475:ios:50740281a03d6f1a5914ae</string>
+	<key>DATABASE_URL</key>
+	<string>https://elemanyonlendir-6c6b7.firebaseio.com</string>
+</dict>
+</plist>

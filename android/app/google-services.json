@@ -1,0 +1,155 @@
+{
+  "project_info": {
+    "project_number": "542509130475",
+    "firebase_url": "https://elemanyonlendir-6c6b7.firebaseio.com",
+    "project_id": "elemanyonlendir-6c6b7",
+    "storage_bucket": "elemanyonlendir-6c6b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542509130475:android:75fd77d7da0dba505914ae",
+        "android_client_info": {
+          "package_name": "com.mysgrup.cleanermy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542509130475-4ujtae3d1dre9v4pj7q5tktffsqfarfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo8M7-30gFnp-d6lMt5-oAsO2_w66tyCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542509130475-4ujtae3d1dre9v4pj7q5tktffsqfarfo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "542509130475-a5agv6p4h5gec384c4on4rk6kvi78smg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mysgrup.benimtemizlikcim"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542509130475:android:1d8dd50bd090955b5914ae",
+        "android_client_info": {
+          "package_name": "com.mysgrup.elemanyonlendir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542509130475-4ujtae3d1dre9v4pj7q5tktffsqfarfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo8M7-30gFnp-d6lMt5-oAsO2_w66tyCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542509130475-4ujtae3d1dre9v4pj7q5tktffsqfarfo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "542509130475-a5agv6p4h5gec384c4on4rk6kvi78smg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mysgrup.benimtemizlikcim"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542509130475:android:c561cdaef2c156265914ae",
+        "android_client_info": {
+          "package_name": "com.mysgrup.temizlikhizmet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542509130475-4ujtae3d1dre9v4pj7q5tktffsqfarfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo8M7-30gFnp-d6lMt5-oAsO2_w66tyCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542509130475-4ujtae3d1dre9v4pj7q5tktffsqfarfo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "542509130475-a5agv6p4h5gec384c4on4rk6kvi78smg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mysgrup.benimtemizlikcim"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542509130475:android:a55d9cedb2caaee8",
+        "android_client_info": {
+          "package_name": "com.reswia.elemanyonlendir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542509130475-4ujtae3d1dre9v4pj7q5tktffsqfarfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo8M7-30gFnp-d6lMt5-oAsO2_w66tyCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542509130475-4ujtae3d1dre9v4pj7q5tktffsqfarfo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "542509130475-a5agv6p4h5gec384c4on4rk6kvi78smg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mysgrup.benimtemizlikcim"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

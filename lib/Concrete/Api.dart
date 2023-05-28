@@ -25,7 +25,7 @@ class ElemanyonlendirApi {
     }
   }
 
-  Future<LoginResponseModel> do_login({LoginRequest loginRequest}) async {
+  Future<LoginResponseModel?> do_login({required LoginRequest loginRequest}) async {
     var response = await http.post(Uri.parse(base_uri + "/start"),
         body: jsonEncode({
           "username": loginRequest.username,

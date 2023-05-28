@@ -19,7 +19,7 @@ class Login extends StatelessWidget {
 }
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  LoginPage();
 
   @override
   _LoginState createState() => _LoginState();
@@ -138,14 +138,14 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  Future<Map<dynamic, dynamic>> login2web() async {
-    String token = await FirebaseMessaging.instance.getToken();
+  Future<Map<dynamic, dynamic>?> login2web() async {
+    String? token = await FirebaseMessaging.instance.getToken();
     print("Token = $token");
     var loginResult = await ElemanyonlendirApi().do_login(
       loginRequest: LoginRequest(
           username: usernameController.text,
           password: passController.text,
-          push_token: token),
+          push_token: token!),
     );
 
     if (loginResult != null) {
