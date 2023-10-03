@@ -6,12 +6,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:logging/logging.dart';
-import 'package:logging_appenders/logging_appenders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:elemanyonlendir/Helpers/firebase_options.dart';
 import 'Concrete/Api.dart';
-import 'package:seq_logger/seq_logger.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -73,50 +70,26 @@ void showFlutterNotification(RemoteMessage message) {
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-createLogger() {
-  Logger.root.level = Level.ALL;
-
-  LogzIoApiAppender(
-    apiToken: "wthEBCBLNTGWaWUYZWjxwnfiLCuwQXQA",
-    url: "https://listener.logz.io:8071/",
-    labels: {
-      "version": "1.0.0", // dynamically later on
-      "build": "2" // dynamically later on
-    },
-  )..attachToLogger(Logger.root);
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  createLogger();
-
-  final _logger = Logger('com.mysgrup.cleanermy');
-
-  _logger.info("Start init");
-
-  _logger.info("Firebase init");
   await Firebase.initializeApp(name: "CleanerMy",options: DefaultFirebaseOptions.currentPlatform);
-  _logger.info("Firebase init end");
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
     await setupFlutterNotifications();
   }
 
-  _logger.info("Firebase token init");
 
   String? fcmToken = "";
 
   try{
     fcmToken = await FirebaseMessaging.instance.getToken();
-  }catch(e, s){
-    _logger.warning("Token alınırken hata oluştu", [
-      e,s
-    ]);
-  }
+  }catch(e){
 
-  _logger.info("Firebase token end $fcmToken");
+  }
 
   print("FCM Token");
   print(fcmToken);

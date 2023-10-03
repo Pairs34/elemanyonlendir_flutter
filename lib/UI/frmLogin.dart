@@ -4,7 +4,6 @@ import 'package:elemanyonlendir/Models/TokenVerify.dart';
 import 'package:elemanyonlendir/UI/frmBrowser.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -65,8 +64,7 @@ class _LoginState extends State<LoginPage> {
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
-                      )
-                      /*,hintText: '05xxxxxxxxx'*/),
+                      ) /*,hintText: '05xxxxxxxxx'*/),
                 ),
               ),
               Padding(
@@ -119,8 +117,10 @@ class _LoginState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => new BrowserPage(
-                                url: "https://cleanermy.com/cleaner-registration",
+                              builder: (BuildContext context) =>
+                                  new BrowserPage(
+                                url:
+                                    "https://cleanermy.com/cleaner-registration",
                               ),
                             ),
                           )
