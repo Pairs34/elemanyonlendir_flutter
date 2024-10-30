@@ -10,66 +10,61 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:elemanyonlendir/Helpers/firebase_options.dart';
 import 'Concrete/Api.dart';
 
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await setupFlutterNotifications();
-  showFlutterNotification(message);
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  print('Handling a background message ${message.messageId}');
-}
-
-AndroidNotificationChannel channel;
+late final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+late final AndroidNotificationChannel notificationChannel;
 bool isFlutterLocalNotificationsInitialized = false;
 
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await _initializeFirebase();
+  await setupFlutterNotifications();
+  showNotification(message);
+  debugPrint('Background message received: ${message.messageId}');
+}
+
+Future<void> _initializeFirebase() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+}
+
 Future<void> setupFlutterNotifications() async {
-  if (isFlutterLocalNotificationsInitialized) {
-    return;
-  }
-  channel = const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description:
-        'This channel is used for important notifications.', // description
+  if (isFlutterLocalNotificationsInitialized) return;
+
+  notificationChannel = const AndroidNotificationChannel(
+    'high_importance_channel',
+    'High Importance Notifications',
+    description: 'This channel is used for important notifications.',
     importance: Importance.high,
   );
 
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-  /// Create an Android Notification Channel.
-  ///
-  /// We use this channel in the `AndroidManifest.xml` file to override the
-  /// default FCM channel to enable heads up notifications.
+  
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(notificationChannel);
 
-  /// Update the iOS foreground notification presentation options to allow
-  /// heads up notifications.
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
     sound: true,
   );
+
   isFlutterLocalNotificationsInitialized = true;
 }
 
-void showFlutterNotification(RemoteMessage message) {
-  var notification = message.notification;
-  var android = message.notification?.android;
-  if (notification != null && android != null && !kIsWeb) {
+void showNotification(RemoteMessage message) {
+  final notification = message.notification;
+  final androidNotification = message.notification?.android;
+
+  if (notification != null && androidNotification != null && !kIsWeb) {
     flutterLocalNotificationsPlugin.show(
       notification.hashCode,
       notification.title,
       notification.body,
       NotificationDetails(
         android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          channelDescription: channel.description,
-          //      one that already exists in example app.
+          notificationChannel.id,
+          notificationChannel.name,
+          channelDescription: notificationChannel.description,
           icon: 'launch_background',
         ),
       ),
@@ -77,48 +72,40 @@ void showFlutterNotification(RemoteMessage message) {
   }
 }
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
-void main() async {
+Future<void> initializeAppSettings() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await _initializeFirebase();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
     await setupFlutterNotifications();
   }
 
   final fcmToken = await FirebaseMessaging.instance.getToken();
+  debugPrint("FCM Token: $fcmToken");
 
-  print("FCM Token");
-  print(fcmToken);
-
-  /// Update the iOS foreground notification presentation options to allow
-  /// heads up notifications.
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
     sound: true,
   );
+}
 
+Future<void> runAppropriateScreen() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  Globals.token = prefs.getString("verify_token");
-  if (Globals.token != null) {
-    ElemanyonlendirApi().verify_token().then((value) => {
-          if (!value.contains("success"))
-            {
-              runApp(Login()),
-            }
-          else
-            {
-              runApp(Browser(
-                uri:
-                    "https://elemanyonlendirapp.top/app/token/${Globals.token}",
-              )),
-            }
-        });
-  } else {
-    runApp(Login());
-  }
+  final token = prefs.getString("verify_token") ?? '';
+  await Globals.instance.setToken(token);
+
+  final isTokenValid = await ElemanyonlendirApi().verifyToken();
+  final screen = isTokenValid.contains("success")
+      ? Browser(uri: "https://elemanyonlendirapp.top/app/token/$token")
+      : Login();
+
+  runApp(screen);
+}
+
+void main() async {
+  await initializeAppSettings();
+  await runAppropriateScreen();
 }

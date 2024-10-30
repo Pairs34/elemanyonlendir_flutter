@@ -6,7 +6,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -18,16 +17,16 @@ class Login extends StatelessWidget {
 }
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<LoginPage> {
-  var usernameController =
+  final usernameController =
       MaskedTextController(mask: "00000000000", text: "05xxxxxxxxx");
-  var passController = TextEditingController();
+  final passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,139 +40,135 @@ class _LoginState extends State<LoginPage> {
               padding: const EdgeInsets.all(15),
               child: Image.asset("assets/images/login_logo.png"),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: TextField(
-                controller: usernameController,
-                decoration: InputDecoration(
-                    labelText: "Telefon Numaranız",
-                    hintStyle: TextStyle(color: Colors.white),
-                    labelStyle: TextStyle(
-                        color: Colors.black,
-                        decorationStyle: TextDecorationStyle.wavy),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
-                    hintText: '05xxxxxxxxx'),
-              ),
+            _buildTextField(
+              controller: usernameController,
+              label: "Telefon Numaranız",
+              hintText: '05xxxxxxxxx',
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: TextField(
-                obscureText: true,
-                obscuringCharacter: "*",
-                controller: passController,
-                decoration: InputDecoration(
-                    labelText: "Parola",
-                    hintStyle: TextStyle(color: Colors.white),
-                    labelStyle: TextStyle(
-                        color: Colors.black,
-                        decorationStyle: TextDecorationStyle.wavy),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    hintText: 'Parola giriniz'),
-              ),
+            _buildTextField(
+              controller: passController,
+              label: "Parola",
+              hintText: 'Parola giriniz',
+              obscureText: true,
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: ElevatedButton(
-                      onPressed: () => {
-                        if (usernameController.text.isNotEmpty &
-                            passController.text.isNotEmpty)
-                          {login2web()}
-                      },
-                      child: Text("GİRİŞ"),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: ElevatedButton(
-                      onPressed: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => new BrowserPage(
-                              url: "https://elemanyonlendir.com/basvuru",
-                            ),
-                          ),
-                        )
-                      },
-                      child: Text("Kayıt Ol"),
-                    ),
-                  ),
-                ),
-              ],
-            )
+            _buildButtons(context),
           ],
         ),
       ),
     );
   }
 
-  Future<Map<dynamic, dynamic>> login2web() async {
-    String token = await FirebaseMessaging.instance.getToken();
-    print("Token = $token");
-    var login_result = await ElemanyonlendirApi().do_login(
-      loginRequest: LoginRequest(
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required String hintText,
+    bool obscureText = false,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        obscuringCharacter: "*",
+        decoration: InputDecoration(
+          labelText: label,
+          hintStyle: TextStyle(color: Colors.white),
+          labelStyle: TextStyle(
+              color: Colors.black, decorationStyle: TextDecorationStyle.wavy),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          hintText: hintText,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildButtons(BuildContext context) {
+    return Row(
+      children: [
+        _buildButton(
+          text: "GİRİŞ",
+          onPressed: () async {
+            if (usernameController.text.isNotEmpty &&
+                passController.text.isNotEmpty) {
+              await login2web(context);
+            } else {
+              showAlertDialog(context);
+            }
+          },
+        ),
+        _buildButton(
+          text: "Kayıt Ol",
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BrowserPage(
+                url: "https://elemanyonlendir.com/basvuru",
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildButton({required String text, required VoidCallback onPressed}) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: ElevatedButton(
+          onPressed: onPressed,
+          child: Text(text),
+        ),
+      ),
+    );
+  }
+
+  Future<void> login2web(BuildContext context) async {
+    final token = await FirebaseMessaging.instance.getToken();
+    debugPrint("FCM Token = $token");
+
+    try {
+      final loginResult = await ElemanyonlendirApi().doLogin(
+        loginRequest: LoginRequest(
           username: usernameController.text,
           password: passController.text,
-          push_token: token),
-    );
+          pushToken: token ?? '',
+        ),
+      );
 
-    if (login_result != null) {
-      Globals.token = login_result.token;
-      saveTokenToSharedPreference(login_result.token);
+      // Token'ı güvenli saklama alanına kaydedin
+      await Globals.instance.setToken(loginResult.token);
+
+      // Kullanıcı tarayıcıya yönlendiriliyor
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (BuildContext context) => new BrowserPage(
-            url: login_result.url,
-          ),
+          builder: (context) => BrowserPage(url: loginResult.url),
         ),
       );
-    } else {
-      showAlertDialog(context);
+    } catch (e) {
+      debugPrint("Login failed: $e");
+      showAlertDialog(context,
+          message: "Giriş başarısız. Lütfen tekrar deneyin.");
     }
-
-    return null;
   }
 
-  saveTokenToSharedPreference(String token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("verify_token", token);
-  }
-
-  showAlertDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = ElevatedButton(
-      child: Text("Tamam"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Hata"),
-      content: Text("Giriş bilgileri hatalı"),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
+  void showAlertDialog(BuildContext context,
+      {String message = "Giriş bilgileri hatalı"}) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
+      builder: (context) => AlertDialog(
+        title: Text("Hata"),
+        content: Text(message),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text("Tamam"),
+          ),
+        ],
+      ),
     );
   }
 }

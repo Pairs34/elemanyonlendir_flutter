@@ -1,49 +1,54 @@
 import 'dart:convert';
-
 import 'package:elemanyonlendir/Helpers/Globals.dart';
 import 'package:elemanyonlendir/Models/LoginResponseModel.dart';
 import 'package:elemanyonlendir/Models/TokenVerify.dart';
 import 'package:http/http.dart' as http;
 
 class ElemanyonlendirApi {
-  String base_uri = "https://elemanyonlendirapp.top";
+  final String _baseUri = "https://elemanyonlendirapp.top";
+  final String _apiKey = "2f1d026c5ba58d64e67d81cb7bd581d2064d50b5131f172271761735ed850c74";
 
-  Future<String> verify_token() async {
-    print("Verify Token = ${Globals.token}");
-    var response = await http.post(Uri.parse(base_uri + "/verifytoken"),
-        body: jsonEncode({"token": Globals.token}),
-        headers: {
-          "Content-Type": "application/json",
-          "apikey":
-              "2f1d026c5ba58d64e67d81cb7bd581d2064d50b5131f172271761735ed850c74"
-        });
+  // Common headers for all requests
+  Map<String, String> get _headers => {
+        "Content-Type": "application/json",
+        "apikey": _apiKey,
+      };
+
+  Future<String> verifyToken() async {
+    final token = await Globals.instance.token;
+    if (token == null || token.isEmpty) {
+      throw Exception("Token is not available");
+    }
+
+    final response = await http.post(
+      Uri.parse("$_baseUri/verifytoken"),
+      body: jsonEncode({"token": token}),
+      headers: _headers,
+    );
 
     if (response.statusCode == 200) {
       return response.body;
     } else {
-      return "";
+      throw Exception("Failed to verify token: ${response.statusCode}");
     }
   }
 
-  Future<LoginResponseModel> do_login({LoginRequest loginRequest}) async {
-    var response = await http.post(Uri.parse(base_uri + "/start"),
-        body: jsonEncode({
-          "username": loginRequest.username,
-          "password": loginRequest.password,
-          "push_token": loginRequest.push_token
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          "apikey":
-              "2f1d026c5ba58d64e67d81cb7bd581d2064d50b5131f172271761735ed850c74"
-        });
+  Future<LoginResponseModel> doLogin({required LoginRequest loginRequest}) async {
+    final response = await http.post(
+      Uri.parse("$_baseUri/start"),
+      body: jsonEncode({
+        "username": loginRequest.username,
+        "password": loginRequest.password,
+        "push_token": loginRequest.pushToken,
+      }),
+      headers: _headers,
+    );
 
     if (response.statusCode == 200) {
-      Map responseDecoded = jsonDecode(response.body);
-      return LoginResponseModel(
-          token: responseDecoded["token"], url: responseDecoded["url"]);
+      final Map<String, dynamic> responseDecoded = jsonDecode(response.body);
+      return LoginResponseModel.fromJson(responseDecoded);
     } else {
-      return null;
+      throw Exception("Failed to login: ${response.statusCode}");
     }
   }
 }
