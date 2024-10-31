@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 
 class FirebaseNotificationService {
@@ -17,16 +18,15 @@ class FirebaseNotificationService {
   final Map<String, dynamic> serviceAccountJson = {
     "type": "service_account",
     "project_id": "elemanyonlendir-6c6b7",
-    "private_key_id": "d190314a52ce6c4c06a1384f383cf0c7343ad67e",
+    "private_key_id": "2d25d06a84978f915bbd1871c7d741e62f3a7249",
     "private_key":
-        "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCft0c8xb50ZrlF\nsb3GlAEVIsuOa0+BmsEh3bwHHMU4RaKe4ru/PdA6XVA/xX8cvfMH7saTOcopzkdw\np6ZhmqaCZX7nldq7SS8p9nopCji5Uv9D4ufmynoJFEWv8aw1UftWSnn2cEc5HUXu\nNPJiaHyWHGfrCOzAtY5i04h/5aXTJ1jX98piuuWRV+cZjimSpfZ/NAefcGj3mL4V\nw+dQ/RElgnHcxr+PopzAh688UH6FZoipKMIoE3f5NNxDhT9K8vZszVASSfceY9HQ\n8sFYHJjhEFbl2kJw4t7tCGa93xYvg/0nkyN3VWpuR5PLAU7FTfyAGQttoxetayz7\nfJkQtWeZAgMBAAECggEAA+lUKEvbdzRQ00EgGa3kPOVGQO2l29GzayXoBfCRb+hc\nrDF3UZ6s69D/NyCaFVUdj5Msb8yZg96WZ07jxz4nV8gujHNiEPYg3pE3uquSag97\nSulSrpdE19YUQtPTWNbyJdHbHMrxI5fw732CdiCC9JYrgVkNm0aW/xqZHDC+l+Yz\n1lbHVenn9mYuzb2X2vSQ7AdjHYnx/+6bLd8n88WS65WJeM3iGB/u/WziP3ZcuGTF\n0JQcjr/IUIs6zF1CGTA5NAsuuV5u7hiWFIJ6Z59ynzNfK+cV7Kd5C7B+cASrSjL7\naGJsTCBiqC+1kWcD2vtu0j2HbNpS/8qJRQZEkxKDhQKBgQDe2jbaOHDd0MKgaWL6\ng73j9EdOZaCHmeN67VK8kNefq+Ye4QtyGd+URXL029gu0tUPWZN4LgEjhyTsARBt\nLORh2vzHhp1M7SKi0/cfXCg8GAObp4LBTiduFuYDT0zHm0qpW5XiYh1Y/5hDwtxt\nWvp3NC1zIF1lOZbczkAJit2CTwKBgQC3ePM7qJNrtghnZe/p6BSXyoQ6HWk8JFmw\n0Z6nLF0ojsBc0Wg37RCIWALBqKB6AR+3TQr6ug6mskErf9r8yufCTc4tirE+IBsI\n2h9f7zfK5cLSpX+RIJhl9ufUwX7Mcl3Boou9aA0Jho037eSPbpY5RDVWhruXo0aB\nsTfW7N4FlwKBgCnN+Zg6GkIiFUCORHkGGasXegDk45ZMcfXvayPgb/KOBp8oTENd\nQynHVWdFjmpKNpmojhdvWdtWUMDM+k3gq/8HW3/6aquxmFu/M454dTvArXyXkdm9\nVXw7Y26fg6G2Ke1XNui+yw6U8/VSKpOBC5cs/JGqMpr4kKpfLngbyq3VAoGBAIFu\n6FlcEbRZFRCsz1X6jhyPmDzPZuAw3L1rBDv3hjkIjBhu+tEJgzJMtJUeeyfXByLv\nTSGYhKGA+4zOhBT2qA1himSChYvIZooWJzAsuPWApbKpYpdloV29k8t6PhPJUu85\n1s9mSlw/+fxM7YNqhrwbrG1AW7McUq9H8JbFP9Q9AoGAPWy0gpdENX70R+2Dcf5k\nk4QahUgrnUWwwIpJcutk+B4+kyU6hOfRR+7u04iK1Dufc4powuVhyzX9k1XIszm2\nFCdFyRNYqHBJTo5X+u3Y6/k5aNslZxXbIXcMil3Yl10pLm9+yFxbRKNvG9hz0cDy\nyLWbCXXY7ekVo6tOhtyzmRI=\n-----END PRIVATE KEY-----\n",
+        "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCxlexwsehr3v2k\nCOHPmOT2LUiq0hZKbziP4JDZo1OgSbWeyMiKbMjRzRCkTw7FNBtL1Pqxf72oiRrm\nvsRFPKr7ABZbViQDabehZY/EvuXK4pGtHvJaSD6XQp+rUkiFvlDNANJ7fK9CU87+\n/6MNVU0eXU8sygdmBzssiHb8BepkoUk5hElBu+UszQnJD/VmW/uv2fGCvlCrIC2J\nQQWfXc9uD3BI0MfHuebpHKrRYy4Em8gwEspIjvvZ6ppjX7+m4+3K9VpzRIWyWfvK\nTtBnLauI1nxwR9Stv9NPN7K3APcLzZyDyiFMDCydBBwBvNcM5I0o57dt/bmo3KME\nx0kZO9lVAgMBAAECggEAEnqSyWFB2aOxCfYgpSz4OkOZCallx2YOYS5RdEwiAg5Z\nd0XWVE0gknA/uJE/bLbQ1lG5qmmr7xMhOPyFyNyYwBiQuv1aLv67rHA4hxUELVnp\nJbYQKuPUm4HDwpyDzmLw3nwk6tOdGw5EflVUfqkvJqc3+2WkYnIDLs2eb/gfnUvc\nnCdslo1spjOtG9LZPJNYUNYj/ckkeR3hhATs0ZERCwDxCGkfMLjfd2stC73dsPvg\nzHZBo+xaRTOT43+kAgF0Ed7adgjQvaLKWGvl86o6zmI4DiCKgRez/efDb66Mk1MV\n+NzvoQlIMVSPRW4YQSKQBK88X0MIU59IEA8bBlL1UQKBgQDodCgpRUGuUvSTKBwD\nklQRQGnF//ZC7TxT8Tzc58/m8AlCC4z+xSwLwik1hm+6TFWPuJL/kkQBhGtbWgiS\nZ3RKHkauge1suIQgK0nrRme8naXd+o8Y41lmzpYEuOSWd76+cUAuU2SjNziEKD8C\nkmhpVDNDQNfrJrc7tzzX8udISQKBgQDDkvZArxblbFmDIR0yvJpvp+YprJhoDUXJ\nCu01tLlzJDYxMRPTJsb75PONqLCw0iLndnb8Kdu0K7itmx+sq3nY5KzbeMpyIkOf\ns0gAYRcTZxtHtkkpWCjuXbEKCpMRNL1NTbki7c8TbQMcMfVK0BTmnRSqShzoESEx\nMiF1u3AArQKBgCKz9Kr0o/GagNjXTBdcaSCKNUBSDjm/oRoHEccI9IjNnRQ3FT2T\nwhefTPeoslVlwABM1eVBuNVhJ4Xj0xPIThwimPrEeuWYRmFnFQoC4MnP30tcdLCK\ngHZQsSTTVY0BI4Da93HzETssq0tPltiTcvMGlwCbVaDNjt1jZbn3kX/BAoGBALkW\ncXT//zQ62W/vO9nTgnjfNkUEcewve3brn1jvY37jq2Hcp31yumiT4ieTmTyOcrgJ\ndkvpNWMK6alrIIvicNtid3DxnO5tHQCbxC2PtS4Iq1mv2weExp/oDW+KWGq1Nd5e\nCzNSSmKBDat2YEVgLheeW3tZzoeWBoqvfdkU/ce1AoGBAJba9+R7kblO0h5HP6pa\nINsaOkS+CxxpQnOIt3qxYjnK/TaeHCJTKhYMJry+Ah0aw9ZBMiChiqYrcHW80ajn\npN73hwlMma9Tppm8CZQe4rLYM2zelWD7aR/V8Mz9CcYE/ti+XKSbCLbSCZJs8ACx\nMTnBwcJnVv1c5hg/cQTJ4ZC5\n-----END PRIVATE KEY-----\n",
     "client_email":
         "firebase-adminsdk-yxo0j@elemanyonlendir-6c6b7.iam.gserviceaccount.com",
     "client_id": "107919437583373753398",
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url":
-        "https://www.googleapis.com/oauth2/v1/certs",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_x509_cert_url":
         "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-yxo0j%40elemanyonlendir-6c6b7.iam.gserviceaccount.com",
     "universe_domain": "googleapis.com"
@@ -55,7 +55,7 @@ class FirebaseNotificationService {
       _accessToken = credentials.accessToken.data;
       client.close();
     }
-
+    debugPrint("Service Key = ${_accessToken}");
     return _accessToken!;
   }
 }

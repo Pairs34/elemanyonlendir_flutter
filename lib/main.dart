@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:elemanyonlendir/Helpers/firebase_options.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 late final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 late final AndroidNotificationChannel notificationChannel;
@@ -115,12 +116,13 @@ Future<void> runAppropriateScreen() async {
   final screen = isTokenValid.contains("success")
       ? Browser(uri: "https://elemanyonlendirapp.top/app/token/$token")
       : Login();
-
+  FlutterNativeSplash.remove();
   runApp(screen);
 }
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await initializeAppSettings();
   await runAppropriateScreen();
 }
