@@ -373,7 +373,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.5.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mysgrup.elemanyonlendir;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mysgrup.elemanyonlendircalisan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = elemanyonlendirwebviewprofile;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -509,7 +509,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.5.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mysgrup.elemanyonlendir;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mysgrup.elemanyonlendircalisan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = elemanyonlendirwebviewprofile;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -539,7 +539,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.5.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mysgrup.elemanyonlendir;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mysgrup.elemanyonlendircalisan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = elemanyonlendirwebviewprofile;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

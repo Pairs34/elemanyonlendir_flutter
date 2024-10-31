@@ -1,4 +1,4 @@
-package com.example.elemanyonlendircalisan
+package com.mysgrup.elemanyonlendircalisan
 
 import io.flutter.embedding.android.FlutterActivity
 

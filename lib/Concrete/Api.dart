@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 
 class ElemanyonlendirApi {
   final String _baseUri = "https://elemanyonlendirapp.top";
-  final String _apiKey = "2f1d026c5ba58d64e67d81cb7bd581d2064d50b5131f172271761735ed850c74";
+  final String _apiKey =
+      "2f1d026c5ba58d64e67d81cb7bd581d2064d50b5131f172271761735ed850c74";
 
   // Common headers for all requests
   Map<String, String> get _headers => {
@@ -17,7 +18,7 @@ class ElemanyonlendirApi {
   Future<String> verifyToken() async {
     final token = await Globals.instance.token;
     if (token == null || token.isEmpty) {
-      throw Exception("Token is not available");
+      return "no_token";
     }
 
     final response = await http.post(
@@ -29,11 +30,12 @@ class ElemanyonlendirApi {
     if (response.statusCode == 200) {
       return response.body;
     } else {
-      throw Exception("Failed to verify token: ${response.statusCode}");
+      return "no_token";
     }
   }
 
-  Future<LoginResponseModel> doLogin({required LoginRequest loginRequest}) async {
+  Future<LoginResponseModel> doLogin(
+      {required LoginRequest loginRequest}) async {
     final response = await http.post(
       Uri.parse("$_baseUri/start"),
       body: jsonEncode({
