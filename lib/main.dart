@@ -116,13 +116,13 @@ Future<void> runAppropriateScreen() async {
   final screen = isTokenValid.contains("success")
       ? Browser(uri: "https://elemanyonlendirapp.top/app/token/$token")
       : Login();
-  // FlutterNativeSplash.remove();
+  FlutterNativeSplash.remove();
   runApp(screen);
 }
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await initializeAppSettings();
   await runAppropriateScreen();
 }

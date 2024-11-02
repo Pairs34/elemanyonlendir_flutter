@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Arka plan rengi için tanımlanan renk -->
     <item>
-        <color android:color="#FF4800" />
-    </item>
-
-    <!-- Logoyu ortalamak için bitmap -->
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/login_logo" />
+        <bitmap android:gravity="fill" android:src="@drawable/background"/>
     </item>
 </layer-list>
