@@ -38,7 +38,7 @@ class _LoginState extends State<LoginPage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(15),
-              child: Image.asset("assets/images/login_logo.png"),
+              child: Image.asset("assets/images/login_page.png"),
             ),
             _buildTextField(
               controller: usernameController,

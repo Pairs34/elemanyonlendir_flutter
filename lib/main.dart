@@ -110,13 +110,13 @@ Future<void> initializeAppSettings() async {
 }
 
 Future<void> runAppropriateScreen() async {
+  FlutterNativeSplash.remove();
   final token = Globals.instance.token;
 
   final isTokenValid = await ElemanyonlendirApi().verifyToken();
   final screen = isTokenValid.contains("success")
       ? Browser(uri: "https://elemanyonlendirapp.top/app/token/$token")
       : Login();
-  FlutterNativeSplash.remove();
   runApp(screen);
 }
 
