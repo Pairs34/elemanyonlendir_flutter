@@ -1,10 +1,10 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=C:\sdks\flutter"
-export "FLUTTER_APPLICATION_PATH=C:\Users\Pairs\Desktop\Projects\Flutter\elemanyonlendir_flutter"
+export "FLUTTER_ROOT=/Users/aliyildirim/Documents/flutter"
+export "FLUTTER_APPLICATION_PATH=/Users/aliyildirim/Desktop/elemanyonlendir_flutter"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
-export "FLUTTER_BUILD_NAME=2.5.3"
+export "FLUTTER_BUILD_NAME=2.5.4"
 export "FLUTTER_BUILD_NUMBER=4"
 export "DART_OBFUSCATION=false"
 export "TRACK_WIDGET_CREATION=true"

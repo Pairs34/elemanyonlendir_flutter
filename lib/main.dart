@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:elemanyonlendir/Concrete/Api.dart';
 import 'package:elemanyonlendir/Concrete/firebase_service.dart';
 import 'package:elemanyonlendir/Helpers/Globals.dart';
@@ -103,7 +105,7 @@ Future<void> initializeAppSettings() async {
 
   // FCM Token'i al
   final firebaseService = FirebaseNotificationService();
-  final fcmToken = await FirebaseMessaging.instance.getToken(
+  final fcmToken = Platform.isIOS ? await FirebaseMessaging.instance.getAPNSToken() : FirebaseMessaging.instance.getToken(
     vapidKey: await firebaseService.token,
   );
   debugPrint("FCM Token: $fcmToken");
