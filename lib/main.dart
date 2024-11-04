@@ -105,7 +105,7 @@ Future<void> initializeAppSettings() async {
 
   // FCM Token'i al
   final firebaseService = FirebaseNotificationService();
-  final fcmToken = Platform.isIOS ? await FirebaseMessaging.instance.getAPNSToken() : FirebaseMessaging.instance.getToken(
+  final fcmToken = Platform.isIOS ? await FirebaseMessaging.instance.getAPNSToken() : await FirebaseMessaging.instance.getToken(
     vapidKey: await firebaseService.token,
   );
   debugPrint("FCM Token: $fcmToken");
@@ -113,13 +113,13 @@ Future<void> initializeAppSettings() async {
 
 Future<void> runAppropriateScreen() async {
   FlutterNativeSplash.remove();
-  final token = Globals.instance.token;
+  final token = await Globals.instance.token;
 
-  final isTokenValid = await ElemanyonlendirApi().verifyToken();
-  final screen = isTokenValid.contains("success")
-      ? Browser(uri: "https://elemanyonlendirapp.top/app/token/$token")
-      : Login();
-  runApp(screen);
+  if (token == null || !(await ElemanyonlendirApi().verifyToken()).contains("success")) {
+    runApp(Login());
+  } else {
+    runApp(Browser(uri: "https://elemanyonlendirapp.top/app/token/$token"));
+  }
 }
 
 void main() async {
