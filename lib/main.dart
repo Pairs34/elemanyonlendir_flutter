@@ -118,7 +118,7 @@ Future<void> runAppropriateScreen() async {
   if (token == null || !(await ElemanyonlendirApi().verifyToken()).contains("success")) {
     runApp(Login());
   } else {
-    runApp(Browser(uri: "https://elemanyonlendirapp.top/app/token/$token"));
+    runApp(Browser(uri: "https://uygulama.benimtemizlikcim.com/app/token/$token"));
   }
 }
 

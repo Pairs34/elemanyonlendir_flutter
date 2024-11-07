@@ -104,7 +104,7 @@ class _LoginState extends State<LoginPage> {
             context,
             MaterialPageRoute(
               builder: (context) => BrowserPage(
-                url: "https://elemanyonlendir.com/basvuru",
+                url: "https://benimtemizlikcim.com/temizlikci-kayit",
               ),
             ),
           ),
