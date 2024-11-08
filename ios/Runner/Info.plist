@@ -54,6 +54,8 @@
 	<true/>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>Problemlerinizi iletebilmeniz için kamera üzerinden görüntü iletebilmeniz gerekmektedir.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
