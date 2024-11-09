@@ -1,10 +1,10 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=C:\sdks\flutter
-FLUTTER_APPLICATION_PATH=C:\Users\Pairs\Desktop\Projects\Flutter\elemanyonlendir_flutter
+FLUTTER_ROOT=/Users/aliyildirim/Documents/flutter
+FLUTTER_APPLICATION_PATH=/Users/aliyildirim/Desktop/elemanyonlendir_flutter
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=2.5.5
-FLUTTER_BUILD_NUMBER=5
+FLUTTER_BUILD_NAME=2.5.6
+FLUTTER_BUILD_NUMBER=6
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
