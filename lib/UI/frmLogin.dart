@@ -32,7 +32,7 @@ class _LoginState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor("#F75621"),
+        backgroundColor: HexColor("#fb2252"),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

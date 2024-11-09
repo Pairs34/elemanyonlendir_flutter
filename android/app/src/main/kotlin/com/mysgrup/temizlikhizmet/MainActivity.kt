@@ -1,4 +1,4 @@
-package com.mysgrup.elemanyonlendircalisan
+package com.mysgrup.temizlikhizmet
 
 import android.os.Build
 import android.os.Bundle
