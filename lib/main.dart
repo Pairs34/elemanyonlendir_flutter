@@ -16,7 +16,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await initializeFirebase();
   await NotificationService.instance.init();
-  NotificationService.instance.showFirebaseMessage(message);
+  await NotificationService.instance.showFirebaseMessage(message);
   debugPrint('Background message received: ${message.messageId}');
 }
 
