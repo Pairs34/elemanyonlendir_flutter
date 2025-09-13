@@ -4,16 +4,6 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-/// Default [FirebaseOptions] for use with your Firebase apps.
-///
-/// Example:
-/// ```dart
-/// import 'firebase_options.dart';
-/// // ...
-/// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
-/// );
-/// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -64,13 +54,12 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBb4oB4rWP6vqqYv_Ims8c0vLbePDWe--4',
-    appId: '1:542509130475:ios:44598a59caa458975914ae',
-    messagingSenderId: '542509130475',
-    projectId: 'react-native-firebase-testing',
-    databaseURL: 'https://elemanyonlendir-6c6b7.firebaseio.com',
-    storageBucket: 'elemanyonlendir-6c6b7.firebasestorage.app'
-  );
+      apiKey: 'AIzaSyBb4oB4rWP6vqqYv_Ims8c0vLbePDWe--4',
+      appId: '1:542509130475:ios:44598a59caa458975914ae',
+      messagingSenderId: '542509130475',
+      projectId: 'react-native-firebase-testing',
+      databaseURL: 'https://elemanyonlendir-6c6b7.firebaseio.com',
+      storageBucket: 'elemanyonlendir-6c6b7.firebasestorage.app');
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAHAsf51D0A407EklG1bs-5wA7EbyfNFg0',

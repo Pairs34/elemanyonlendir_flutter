@@ -1,27 +1,22 @@
 import 'dart:io';
 
-import 'package:elemanyonlendir/Concrete/Api.dart';
-import 'package:elemanyonlendir/Concrete/firebase_service.dart';
-import 'package:elemanyonlendir/Helpers/Globals.dart';
-import 'package:elemanyonlendir/UI/frmBrowser.dart';
-import 'package:elemanyonlendir/UI/frmLogin.dart';
+import 'package:elemanyonlendir/core/notifications/notification_service.dart';
+import 'package:elemanyonlendir/core/storage/auth_storage.dart';
+import 'package:elemanyonlendir/data/api/api_service.dart';
+import 'package:elemanyonlendir/core/config/app_config.dart';
+import 'package:elemanyonlendir/firebase_options.dart';
+import 'package:elemanyonlendir/presentation/browser_page.dart';
+import 'package:elemanyonlendir/presentation/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:elemanyonlendir/Helpers/firebase_options.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
-late final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-late final AndroidNotificationChannel notificationChannel;
-bool isFlutterLocalNotificationsInitialized = false;
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await initializeFirebase();
-  await setupFlutterNotifications();
-  showNotification(message);
+  await NotificationService.instance.init();
+  NotificationService.instance.showFirebaseMessage(message);
   debugPrint('Background message received: ${message.messageId}');
 }
 
@@ -29,102 +24,54 @@ Future<void> initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
 
-Future<void> requestNotificationPermission() async {
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
+Future<Widget> _determineStartPage() async {
+  final token = await AuthStorage.instance.getToken();
+  if (token == null) return LoginPage();
 
-  debugPrint('Authorization status: ${settings.authorizationStatus}');
+  final verify = await ApiService().verifyToken();
+  if (verify.contains('success')) {
+    return BrowserPage(url: "${AppConfig.baseUrl}/app/token/$token");
+  }
+  return LoginPage();
 }
 
-void setupForegroundMessageListener() {
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    debugPrint('Foreground mesajı alındı: ${message.messageId}');
-    showNotification(message);
-  });
-}
+class MyApp extends StatelessWidget {
+  final Widget home;
+  const MyApp({super.key, required this.home});
 
-Future<void> setupFlutterNotifications() async {
-  if (isFlutterLocalNotificationsInitialized) return;
-
-  notificationChannel = const AndroidNotificationChannel(
-    'high_importance_channel',
-    'High Importance Notifications',
-    description: 'This channel is used for important notifications.',
-    importance: Importance.high,
-  );
-
-  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(notificationChannel);
-
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-
-  isFlutterLocalNotificationsInitialized = true;
-}
-
-void showNotification(RemoteMessage message) {
-  final notification = message.notification;
-  final androidNotification = message.notification?.android;
-
-  if (notification != null && androidNotification != null && !kIsWeb) {
-    flutterLocalNotificationsPlugin.show(
-      notification.hashCode,
-      notification.title,
-      notification.body,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          notificationChannel.id,
-          notificationChannel.name,
-          channelDescription: notificationChannel.description,
-          icon: 'launch_background',
-        ),
-      ),
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: home,
     );
   }
 }
 
-Future<void> initializeAppSettings() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await initializeFirebase();
-  await requestNotificationPermission();
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  setupForegroundMessageListener();
-
-  if (!kIsWeb) await setupFlutterNotifications();
-
-  // FCM Token'i al
-  final firebaseService = FirebaseNotificationService();
-  final fcmToken = Platform.isIOS ? await FirebaseMessaging.instance.getAPNSToken() : await FirebaseMessaging.instance.getToken(
-    vapidKey: await firebaseService.token,
-  );
-  debugPrint("FCM Token: $fcmToken");
-}
-
-Future<void> runAppropriateScreen() async {
-  FlutterNativeSplash.remove();
-  final token = await Globals.instance.token;
-
-  if (token == null || !(await ElemanyonlendirApi().verifyToken()).contains("success")) {
-    runApp(Login());
-  } else {
-    runApp(Browser(uri: "https://elemanyonlendirapp.top/app/token/$token"));
-  }
-}
-
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await initializeAppSettings();
-  await runAppropriateScreen();
+
+  // Core init
+  await initializeFirebase();
+  await NotificationService.instance.init();
+  await NotificationService.instance.requestPermissionsIfNeeded();
+
+  // Messaging listeners
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onMessage.listen((message) {
+    debugPrint('Foreground mesajı alındı: ${message.messageId}');
+    NotificationService.instance.showFirebaseMessage(message);
+  });
+
+  // Optional: Debug FCM token
+  String? fcmToken = Platform.isIOS
+      ? await FirebaseMessaging.instance.getAPNSToken()
+      : await FirebaseMessaging.instance.getToken();
+  debugPrint('FCM Token: $fcmToken');
+
+  // Decide start page
+  final startPage = await _determineStartPage();
+  FlutterNativeSplash.remove();
+  runApp(MyApp(home: startPage));
 }

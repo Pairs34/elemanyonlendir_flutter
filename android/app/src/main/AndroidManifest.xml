@@ -3,6 +3,10 @@
         android:label="Eleman Yönlendir"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- Varsayılan bildirim kanalı (Android 8+) -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="high_importance_with_sound" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -43,7 +47,7 @@
         </intent>
     </queries>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-<permission android:name="${applicationId}.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-<uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
+    <!-- Android 13+ bildirim izni -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- FCM modern izinleri yukarıda, eski GCM izinleri kaldırıldı -->
 </manifest>

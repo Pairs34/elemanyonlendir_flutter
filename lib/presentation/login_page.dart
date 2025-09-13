@@ -1,20 +1,12 @@
-import 'package:elemanyonlendir/Concrete/Api.dart';
-import 'package:elemanyonlendir/Helpers/Globals.dart';
-import 'package:elemanyonlendir/Models/TokenVerify.dart';
-import 'package:elemanyonlendir/UI/frmBrowser.dart';
+import 'package:elemanyonlendir/core/config/app_config.dart';
+import 'package:elemanyonlendir/core/storage/auth_storage.dart';
+import 'package:elemanyonlendir/data/api/api_service.dart';
+import 'package:elemanyonlendir/models/login_request.dart';
+import 'package:elemanyonlendir/presentation/browser_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:hexcolor/hexcolor.dart';
-
-class Login extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginPage(),
-    );
-  }
-}
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -104,7 +96,7 @@ class _LoginState extends State<LoginPage> {
             context,
             MaterialPageRoute(
               builder: (context) => BrowserPage(
-                url: "https://elemanyonlendir.com/basvuru",
+                url: AppConfig.registrationUrl,
               ),
             ),
           ),
@@ -130,7 +122,7 @@ class _LoginState extends State<LoginPage> {
     debugPrint("FCM Token = $token");
 
     try {
-      final loginResult = await ElemanyonlendirApi().doLogin(
+      final loginResult = await ApiService().doLogin(
         loginRequest: LoginRequest(
           username: usernameController.text,
           password: passController.text,
@@ -138,10 +130,8 @@ class _LoginState extends State<LoginPage> {
         ),
       );
 
-      // Token'ı güvenli saklama alanına kaydedin
-      await Globals.instance.setToken(loginResult.token);
+      await AuthStorage.instance.setToken(loginResult.token);
 
-      // Kullanıcı tarayıcıya yönlendiriliyor
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
