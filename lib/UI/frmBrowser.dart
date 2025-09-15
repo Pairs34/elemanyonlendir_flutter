@@ -19,7 +19,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 class Browser extends StatelessWidget {
   final String uri;
 
-  Browser({this.uri});
+  Browser({required this.uri});
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +33,9 @@ class Browser extends StatelessWidget {
 }
 
 class BrowserPage extends StatefulWidget {
-  String url;
+  final String url;
 
-  BrowserPage({Key key, this.url}) : super(key: key);
+  BrowserPage({Key? key, required this.url}) : super(key: key);
 
   @override
   _BrowserPageState createState() => _BrowserPageState();
@@ -51,7 +51,7 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
       flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
               IOSFlutterLocalNotificationsPlugin>()
-          .requestPermissions(
+          ?.requestPermissions(
             alert: true,
             badge: true,
             sound: true,
@@ -59,25 +59,27 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
     }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      var androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
-      var iOSInit = IOSInitializationSettings();
-      var init = InitializationSettings(android: androidInit, iOS: iOSInit);
-      flutterLocalNotificationsPlugin.initialize(init).then((done) => {
-            flutterLocalNotificationsPlugin.show(
-              0,
-              notification.title,
-              notification.body,
-              NotificationDetails(
-                android: AndroidNotificationDetails(
-                  channel.id,
-                  channel.name,
-                  icon: 'launch_background',
+      RemoteNotification? notification = message.notification;
+      if (notification != null) {
+        var androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+        var iOSInit = IOSInitializationSettings();
+        var init = InitializationSettings(android: androidInit, iOS: iOSInit);
+        flutterLocalNotificationsPlugin.initialize(init).then((done) => {
+              flutterLocalNotificationsPlugin.show(
+                0,
+                notification.title,
+                notification.body,
+                NotificationDetails(
+                  android: AndroidNotificationDetails(
+                    channel.id,
+                    channel.name,
+                    icon: 'launch_background',
+                  ),
+                  iOS: IOSNotificationDetails(),
                 ),
-                iOS: IOSNotificationDetails(),
-              ),
-            )
-          });
+              )
+            });
+      }
     });
   }
 

@@ -26,7 +26,7 @@ class Login extends StatelessWidget {
 }
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginState createState() => _LoginState();
@@ -96,7 +96,7 @@ class _LoginState extends State<LoginPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(
+                        backgroundColor: WidgetStatePropertyAll<Color>(
                           HexColor("#8B0000"),
                         ),
                       ),
@@ -114,7 +114,7 @@ class _LoginState extends State<LoginPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(
+                        backgroundColor: WidgetStatePropertyAll<Color>(
                           HexColor("#8B0000"),
                         ),
                       ),
@@ -141,29 +141,31 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  Future<Map<dynamic, dynamic>> login2web() async {
-    String token = await FirebaseMessaging.instance.getToken();
+  Future<Map<dynamic, dynamic>?> login2web() async {
+    String? token = await FirebaseMessaging.instance.getToken();
     print("Token = $token");
-    var loginResult = await ElemanyonlendirApi().do_login(
-      loginRequest: LoginRequest(
-          username: usernameController.text,
-          password: passController.text,
-          push_token: token),
-    );
-
-    if (loginResult != null) {
-      Globals.token = loginResult.token;
-      saveTokenToSharedPreference(loginResult.token);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => new BrowserPage(
-            url: loginResult.url,
-          ),
-        ),
+    if (token != null) {
+      var loginResult = await ElemanyonlendirApi().do_login(
+        loginRequest: LoginRequest(
+            username: usernameController.text,
+            password: passController.text,
+            push_token: token),
       );
-    } else {
-      showAlertDialog(context);
+
+      if (loginResult != null) {
+        Globals.token = loginResult.token;
+        saveTokenToSharedPreference(loginResult.token);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => new BrowserPage(
+              url: loginResult.url,
+            ),
+          ),
+        );
+      } else {
+        showAlertDialog(context);
+      }
     }
 
     return null;

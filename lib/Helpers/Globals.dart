@@ -1,3 +1,3 @@
-class Globals{
-  static String token;
+class Globals {
+  static String? token;
 }
