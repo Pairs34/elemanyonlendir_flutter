@@ -58,12 +58,13 @@ class NotificationService {
       );
     }
 
-    // Uygulama ön plandayken iOS bildirim sunumu
+    // iOS için Firebase bildirim sunumunu KAPAT
+    // Tüm bildirimleri Flutter local notification ile göstereceğiz
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
+      alert: false,
+      badge: false,
+      sound: false,
     );
 
     _initialized = true;
@@ -76,16 +77,30 @@ class NotificationService {
     await androidPlugin?.requestNotificationsPermission();
 
     if (Platform.isIOS) {
-      await _flnp
-          .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(alert: true, badge: true, sound: true);
+      // iOS için bildirim izinlerini iste - ses, alert ve badge
+      final iosPlugin = _flnp.resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>();
+
+      final granted = await iosPlugin?.requestPermissions(
+          alert: true, badge: true, sound: true);
+
+      if (kDebugMode) {
+        debugPrint('🔔 iOS bildirim izni verildi: ${granted ?? false}');
+      }
     }
-    await FirebaseMessaging.instance.requestPermission(
+
+    // Firebase Messaging izinleri
+    final settings = await FirebaseMessaging.instance.requestPermission(
       alert: true,
       badge: true,
       sound: true,
+      provisional: false,
     );
+
+    if (kDebugMode) {
+      debugPrint(
+          '🔔 Firebase bildirim yetki durumu: ${settings.authorizationStatus}');
+    }
   }
 
   Future<void> showFirebaseMessage(RemoteMessage message) async {
@@ -162,11 +177,18 @@ class NotificationService {
       return;
     }
 
+    final notificationId = DateTime.now().millisecondsSinceEpoch % 100000;
+
+    if (kDebugMode) {
+      debugPrint(
+          '📢 Bildirim gösteriliyor - ID: $notificationId, Başlık: $title, Mesaj: $body');
+    }
+
     _flnp.show(
-      DateTime.now().millisecondsSinceEpoch % 100000,
+      notificationId,
       title,
       body,
-      const NotificationDetails(
+      NotificationDetails(
         android: AndroidNotificationDetails(
           channelId,
           channelName,
@@ -181,10 +203,15 @@ class NotificationService {
           presentAlert: true,
           presentBadge: true,
           presentSound: true,
-          // Özel ses: ios/Runner içine notification.caf ekleyin ve target'a dahil edin
           sound: 'notification.caf',
+          interruptionLevel: InterruptionLevel.timeSensitive,
+          // iOS 15+ için kritik bildirim seviyesi - sessiz moddayken bile çalabilir
         ),
       ),
     );
+
+    if (kDebugMode) {
+      debugPrint('✅ Bildirim gönderildi (Local Notification)');
+    }
   }
 }

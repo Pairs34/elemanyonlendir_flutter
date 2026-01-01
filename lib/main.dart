@@ -60,7 +60,10 @@ void main() async {
   // Messaging listeners
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((message) {
-    debugPrint('Foreground mesajı alındı: ${message.messageId}');
+    debugPrint('🔥 Foreground mesajı alındı: ${message.messageId}');
+    debugPrint(
+        '📬 Notification: ${message.notification?.title} - ${message.notification?.body}');
+    debugPrint('📦 Data: ${message.data}');
     NotificationService.instance.showFirebaseMessage(message);
   });
 
