@@ -34,9 +34,9 @@ if not exist "elemanyonlendir.jks" (
 
 echo [4/5] key.properties dosyasi guncelleniyor...
 (
-echo storeFile=../elemanyonlendir.jks
+echo storeFile=../../elemanyonlendir.jks
 echo storePassword=Mes958958! 
-echo keyAlias=MYSGrup
+echo keyAlias=mysgrup
 echo keyPassword=Mes958958! 
 ) > android\key.properties
 
