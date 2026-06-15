@@ -52,12 +52,10 @@ void main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  // Core init
   await initializeFirebase();
   await NotificationService.instance.init();
   await NotificationService.instance.requestPermissionsIfNeeded();
 
-  // Messaging listeners
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((message) {
     debugPrint('🔥 Foreground mesajı alındı: ${message.messageId}');
@@ -67,13 +65,11 @@ void main() async {
     NotificationService.instance.showFirebaseMessage(message);
   });
 
-  // Optional: Debug FCM token
-  String? fcmToken = Platform.isIOS
+  final fcmToken = Platform.isIOS
       ? await FirebaseMessaging.instance.getAPNSToken()
       : await FirebaseMessaging.instance.getToken();
   debugPrint('FCM Token: $fcmToken');
 
-  // Decide start page
   final startPage = await _determineStartPage();
   FlutterNativeSplash.remove();
   runApp(MyApp(home: startPage));

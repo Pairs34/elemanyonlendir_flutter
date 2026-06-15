@@ -1,8 +1,6 @@
-import 'package:elemanyonlendir/core/notifications/notification_service.dart';
 import 'package:elemanyonlendir/core/storage/auth_storage.dart';
 import 'package:elemanyonlendir/data/api/api_service.dart';
 import 'package:elemanyonlendir/presentation/login_page.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -30,8 +28,6 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     _initializeWebViewController();
-    _requestPermissionsForIOS();
-    _initializeFirebaseMessaging();
   }
 
   void _initializeWebViewController() {
@@ -142,16 +138,6 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
         (route) => false, // Tüm önceki sayfaları temizle
       );
     }
-  }
-
-  void _requestPermissionsForIOS() {
-    NotificationService.instance.requestPermissionsIfNeeded();
-  }
-
-  void _initializeFirebaseMessaging() {
-    FirebaseMessaging.onMessage.listen((message) {
-      NotificationService.instance.showFirebaseMessage(message);
-    });
   }
 
   @override
