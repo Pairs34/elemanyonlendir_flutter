@@ -25,6 +25,7 @@ class _LoginState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('LoginPage.build called');
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -280,6 +281,7 @@ class _LoginState extends State<LoginPage> {
                 builder: (context) => BrowserPage(
                   url: AppConfig.registrationUrl,
                   showBackButton: true,
+                  verifyTokenOnResume: false,
                 ),
               ),
             ),
@@ -365,7 +367,10 @@ class _LoginState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => BrowserPage(url: loginResult.url),
+          builder: (context) => BrowserPage(
+            url: loginResult.url,
+            verifyTokenOnResume: true,
+          ),
         ),
       );
     } catch (e) {

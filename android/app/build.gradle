@@ -9,8 +9,8 @@ plugins {
 android {
     namespace = "com.mysgrup.elemanyonlendircalisan"
     compileSdk = flutter.compileSdkVersion
-    // Pin NDK version to satisfy plugins requiring NDK 27.0.12077973
-    ndkVersion = "27.0.12077973"
+    // Pin NDK version to satisfy plugins requiring NDK 28.2.13676358
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         // Use Java 17 and enable desugaring for libraries that require it

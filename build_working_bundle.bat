@@ -5,10 +5,10 @@ echo ==========================================
 echo.
 
 REM Proje dizinine git
-cd /d "c:\Users\Pairs\Desktop\Projects\Flutter\elemanyonlendir_flutter"
+cd /d "%~dp0"
 
 echo [1/5] Flutter temizligi yapiliyor...
-flutter clean
+call flutter clean
 if %errorlevel% neq 0 (
     echo HATA: Flutter clean basarisiz!
     pause
@@ -16,7 +16,7 @@ if %errorlevel% neq 0 (
 )
 
 echo [2/5] Dependencies yukluyor...
-flutter pub get
+call flutter pub get
 if %errorlevel% neq 0 (
     echo HATA: Dependencies yukleme basarisiz!
     pause
@@ -40,11 +40,13 @@ echo keyAlias=MYSGrup
 echo keyPassword=Mes958958!
 ) > android\key.properties
 
+set "SPLIT_DEBUG_INFO=build\app\outputs\split_debug_info"
+
 echo [5/5] Profile App Bundle olusturuluyor...
-flutter build appbundle --profile
+call flutter build appbundle --profile --obfuscate --split-debug-info=%SPLIT_DEBUG_INFO%
 if %errorlevel% neq 0 (
     echo Profile build basarisiz oldu, debug mode deneniyor...
-    flutter build appbundle --debug
+    call flutter build appbundle --debug
     if %errorlevel% neq 0 (
         echo HATA: App Bundle olusturma basarisiz!
         pause

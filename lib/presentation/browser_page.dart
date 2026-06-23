@@ -8,11 +8,13 @@ import 'package:webview_flutter/webview_flutter.dart';
 class BrowserPage extends StatefulWidget {
   final String url;
   final bool showBackButton;
+  final bool verifyTokenOnResume;
 
   const BrowserPage({
     Key? key,
     required this.url,
     this.showBackButton = false,
+    this.verifyTokenOnResume = false,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,11 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    debugPrint(
+        'BrowserPage.initState url=${widget.url} verifyTokenOnResume=${widget.verifyTokenOnResume}');
+    if (widget.verifyTokenOnResume) {
+      WidgetsBinding.instance.addObserver(this);
+    }
 
     _initializeWebViewController();
   }
@@ -45,8 +51,11 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
       )
       ..setNavigationDelegate(
         NavigationDelegate(
+          onPageStarted: (url) {
+            debugPrint("BrowserPage.onPageStarted: $url");
+          },
           onPageFinished: (url) {
-            debugPrint("Page loaded: $url");
+            debugPrint("BrowserPage.onPageFinished: $url");
             // Logout event listener'ı ekle
             _injectLogoutListener();
             // "Parolamı Unuttum" sayfasında toolbar'ı gizle
@@ -54,8 +63,17 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
               _hideToolbar();
             }
           },
-          onWebResourceError: (error) =>
-              debugPrint("Error loading page: ${error.description}"),
+          onNavigationRequest: (request) {
+            debugPrint("BrowserPage.onNavigationRequest: ${request.url}");
+            return NavigationDecision.navigate;
+          },
+          onProgress: (progress) {
+            debugPrint("BrowserPage.progress: $progress%");
+          },
+          onWebResourceError: (error) {
+            debugPrint(
+                "BrowserPage Error loading page: ${error.description} (code ${error.errorCode})");
+          },
         ),
       )
       ..loadRequest(Uri.parse(widget.url));
@@ -142,7 +160,8 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed && widget.verifyTokenOnResume) {
+      debugPrint('BrowserPage resumed, verifying token...');
       _verifyToken();
     }
   }
@@ -163,7 +182,9 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    if (widget.verifyTokenOnResume) {
+      WidgetsBinding.instance.removeObserver(this);
+    }
     super.dispose();
   }
 
@@ -177,6 +198,7 @@ class _BrowserPageState extends State<BrowserPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('BrowserPage.build url=${widget.url}');
     final isForgotPasswordPage = widget.url.contains('/app/forgot_password');
 
     return WillPopScope(

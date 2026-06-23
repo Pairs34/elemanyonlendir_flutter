@@ -26,12 +26,25 @@ Future<void> initializeFirebase() async {
 
 Future<Widget> _determineStartPage() async {
   final token = await AuthStorage.instance.getToken();
+  debugPrint('main: found token=${token != null}');
   if (token == null) return LoginPage();
 
-  final verify = await ApiService().verifyToken();
-  if (verify.contains('success')) {
-    return BrowserPage(url: "${AppConfig.baseUrl}/app/token/$token");
+  try {
+    final verify = await ApiService().verifyToken().timeout(
+          const Duration(seconds: 10),
+          onTimeout: () => 'no_token',
+        );
+    debugPrint('main: verifyToken result=$verify');
+    if (verify.contains('success')) {
+      return BrowserPage(
+        url: "${AppConfig.baseUrl}/app/token/$token",
+        verifyTokenOnResume: true,
+      );
+    }
+  } catch (e, st) {
+    debugPrint('main: verifyToken failed: $e\n$st');
   }
+
   return LoginPage();
 }
 
@@ -71,6 +84,11 @@ void main() async {
   debugPrint('FCM Token: $fcmToken');
 
   final startPage = await _determineStartPage();
-  FlutterNativeSplash.remove();
+  debugPrint('main: startPage=${startPage.runtimeType}');
   runApp(MyApp(home: startPage));
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    FlutterNativeSplash.remove();
+    debugPrint('main: splash removed after first frame');
+  });
+  debugPrint('main: runApp completed');
 }
